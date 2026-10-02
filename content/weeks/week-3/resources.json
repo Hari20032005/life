@@ -1,0 +1,56 @@
+[
+  {
+    "title": "React documentation",
+    "url": "https://react.dev/",
+    "why": "State, effects, keys and 'You might not need an effect'.",
+    "kind": "reference"
+  },
+  {
+    "title": "Next.js documentation",
+    "url": "https://nextjs.org/docs",
+    "why": "App Router, server and client components. Always read the docs for your installed version.",
+    "kind": "reference"
+  },
+  {
+    "title": "TanStack Query",
+    "url": "https://tanstack.com/query/latest",
+    "why": "Server-state management.",
+    "kind": "reference"
+  },
+  {
+    "title": "React Hook Form",
+    "url": "https://react-hook-form.com/",
+    "why": "Forms with schema resolvers.",
+    "kind": "reference"
+  },
+  {
+    "title": "Playwright",
+    "url": "https://playwright.dev/",
+    "why": "End-to-end tests.",
+    "kind": "reference"
+  },
+  {
+    "title": "Testing Library: React",
+    "url": "https://testing-library.com/docs/react-testing-library/intro/",
+    "why": "Test components the way users use them.",
+    "kind": "reference"
+  },
+  {
+    "title": "WCAG 2.2 Quick Reference",
+    "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+    "why": "Accessibility success criteria in plain checklists.",
+    "kind": "reference"
+  },
+  {
+    "title": "web.dev: Accessibility",
+    "url": "https://web.dev/learn/accessibility",
+    "why": "A practical course on accessible UI.",
+    "kind": "course"
+  },
+  {
+    "title": "Zustand",
+    "url": "https://zustand.docs.pmnd.rs/",
+    "why": "Small global-state library.",
+    "kind": "reference"
+  }
+]

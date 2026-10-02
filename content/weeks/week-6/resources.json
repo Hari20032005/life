@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Architecture Decision Records",
+    "url": "https://adr.github.io/",
+    "why": "Lightweight way to record why you chose something.",
+    "kind": "reference"
+  },
+  {
+    "title": "The Twelve-Factor App",
+    "url": "https://12factor.net/",
+    "why": "Principles for deployable, stateless services.",
+    "kind": "reference"
+  },
+  {
+    "title": "Google SRE Book",
+    "url": "https://sre.google/sre-book/table-of-contents/",
+    "why": "Monitoring, incident response, postmortems.",
+    "kind": "book"
+  },
+  {
+    "title": "Diataxis",
+    "url": "https://diataxis.fr/",
+    "why": "A framework for writing handover documentation people can use.",
+    "kind": "reference"
+  },
+  {
+    "title": "OWASP ASVS",
+    "url": "https://owasp.org/www-project-application-security-verification-standard/",
+    "why": "A checklist standard for security verification before launch.",
+    "kind": "reference"
+  },
+  {
+    "title": "Loom",
+    "url": "https://www.loom.com/",
+    "why": "Recording the demo video.",
+    "kind": "tool"
+  }
+]

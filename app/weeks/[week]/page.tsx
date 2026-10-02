@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Target, ListChecks, ClipboardCheck, Wrench } from "lucide-react";
-import { getWeek, getWeeks, getLessons, getQuiz, getInterview, getLabs, getPrompts, getMarkdown, getAssessment, getFlashcards } from "@/lib/content/loader";
+import { getWeek, getWeeks, getLessons, getQuiz, getInterview, getLabs, getPrompts, getMarkdown, getAssessment, getFlashcards, getResources } from "@/lib/content/loader";
 import { dayHref } from "@/lib/ui-meta";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
@@ -44,6 +44,7 @@ export default async function WeekPage({ params }: { params: Promise<Params> }) 
   const revision = getMarkdown(n, "revision");
   const assessment = getAssessment(n);
   const cards = getFlashcards(n);
+  const resources = getResources(n);
   const keys = lessons.map((l) => `w${l.week}/${l.slug}`);
 
   return (
@@ -57,7 +58,7 @@ export default async function WeekPage({ params }: { params: Promise<Params> }) 
 
       <Tabs defaultValue="overview">
         <TabsList aria-label="Week sections">
-          {[["overview", "Overview"], ["days", "Daily breakdown"], ["project", "Project"], ["labs", "Debug labs"], ["quiz", "Quiz"], ["interview", "Interview"], ["cards", "Flashcards"], ["cheat", "Cheat sheet"], ["revision", "Revision"], ["prompts", "AI prompts"], ["assessment", "Assessment"]].map(([v, l]) => <TabsTrigger key={v} value={v}>{l}</TabsTrigger>)}
+          {[["overview", "Overview"], ["days", "Daily breakdown"], ["project", "Project"], ["labs", "Debug labs"], ["quiz", "Quiz"], ["interview", "Interview"], ["cards", "Flashcards"], ["cheat", "Cheat sheet"], ["revision", "Revision"], ["resources", "Resources"], ["prompts", "AI prompts"], ["assessment", "Assessment"]].map(([v, l]) => <TabsTrigger key={v} value={v}>{l}</TabsTrigger>)}
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
@@ -115,6 +116,24 @@ export default async function WeekPage({ params }: { params: Promise<Params> }) 
         <TabsContent value="cards">{cards.length ? <FlashcardDeck cards={cards} /> : <Empty what="Flashcards" />}</TabsContent>
         <TabsContent value="cheat">{cheat ? <MdxContent source={cheat} /> : <Empty what="The cheat sheet" />}</TabsContent>
         <TabsContent value="revision">{revision ? <MdxContent source={revision} /> : <Empty what="Revision notes" />}</TabsContent>
+        <TabsContent value="resources">
+          {resources.length ? (
+            <div>
+              <p className="mb-4 text-sm text-muted">Official docs and tools for this week. They open in a new tab. If a link has moved, tell your mentor.</p>
+              <ul className="grid gap-3 md:grid-cols-2">
+                {resources.map((r) => (
+                  <li key={r.url}>
+                    <a href={r.url} target="_blank" rel="noopener noreferrer" className="block h-full rounded-xl border border-border bg-surface p-4 hover:border-brand">
+                      <div className="mb-1 flex items-center gap-2"><Badge>{r.kind}</Badge><span className="font-semibold">{r.title}<span className="sr-only"> (opens in a new tab)</span></span></div>
+                      <p className="text-sm text-muted">{r.why}</p>
+                      <p className="mt-1 truncate text-xs text-brand">{new URL(r.url).hostname}</p>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : <Empty what="Resources" />}
+        </TabsContent>
         <TabsContent value="prompts">{prompts.length ? <div className="grid gap-4 lg:grid-cols-2">{prompts.map((p) => <PromptCard key={p.kind} p={p} />)}</div> : <Empty what="AI prompts" />}</TabsContent>
         <TabsContent value="assessment">
           {assessment ? <Card><h2 className="text-xl font-bold">{assessment.title}</h2><p className="text-muted">{assessment.durationMinutes} minutes</p><Button asChild className="mt-4"><Link href={`/weeks/${n}/assessment`}>Open assessment</Link></Button></Card> : <Empty what="The weekly assessment" />}

@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Node.js API documentation",
+    "url": "https://nodejs.org/docs/latest/api/",
+    "why": "Official reference for the runtime.",
+    "kind": "reference"
+  },
+  {
+    "title": "TypeScript Handbook",
+    "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+    "why": "Types, interfaces, unions and narrowing.",
+    "kind": "reference"
+  },
+  {
+    "title": "Express documentation",
+    "url": "https://expressjs.com/",
+    "why": "Routing, middleware and error handling.",
+    "kind": "reference"
+  },
+  {
+    "title": "PostgreSQL documentation",
+    "url": "https://www.postgresql.org/docs/current/",
+    "why": "The authoritative SQL, constraint, index and locking reference.",
+    "kind": "reference"
+  },
+  {
+    "title": "Use The Index, Luke",
+    "url": "https://use-the-index-luke.com/",
+    "why": "A free guide to how database indexes really work.",
+    "kind": "book"
+  },
+  {
+    "title": "Drizzle ORM documentation",
+    "url": "https://orm.drizzle.team/docs/overview",
+    "why": "Schema, migrations and queries.",
+    "kind": "reference"
+  },
+  {
+    "title": "Zod documentation",
+    "url": "https://zod.dev/",
+    "why": "Schema validation and inferred types.",
+    "kind": "reference"
+  },
+  {
+    "title": "Vitest",
+    "url": "https://vitest.dev/",
+    "why": "Test runner used all program long.",
+    "kind": "reference"
+  },
+  {
+    "title": "Bruno documentation",
+    "url": "https://docs.usebruno.com/",
+    "why": "API collections stored in your repository.",
+    "kind": "tool"
+  }
+]

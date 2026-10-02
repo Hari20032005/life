@@ -42,3 +42,6 @@ jobs:
           (cd labs/week-1 && npm ci)
           npm run labs:check:db
           npm run labs:check:browser
+      - name: Check resource links (informational; bot-blocking sites only warn)
+        continue-on-error: true
+        run: npm run links:check

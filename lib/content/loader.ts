@@ -5,8 +5,8 @@ import { cache } from "react";
 import matter from "gray-matter";
 import { z } from "zod";
 import {
-  WeekSchema, LessonMetaSchema, QuizSchema, InterviewItemSchema, FlashcardSchema, LabSchema, PromptSchema, AssessmentSchema,
-  type Week, type LessonMeta, type Quiz, type InterviewItem, type Flashcard, type Lab, type PromptItem, type Assessment,
+  WeekSchema, LessonMetaSchema, QuizSchema, InterviewItemSchema, FlashcardSchema, LabSchema, PromptSchema, AssessmentSchema, ResourceSchema,
+  type Week, type LessonMeta, type Quiz, type InterviewItem, type Flashcard, type Lab, type PromptItem, type Assessment, type Resource,
 } from "./schema";
 
 const ROOT = path.join(process.cwd(), "content");
@@ -57,6 +57,7 @@ export const getInterview = cache((n: number): InterviewItem[] => readJson(path.
 export const getFlashcards = cache((n: number): Flashcard[] => readJson(path.join(weekDir(n), "flashcards.json"), z.array(FlashcardSchema)) ?? []);
 export const getLabs = cache((n: number): Lab[] => readJson(path.join(weekDir(n), "labs.json"), z.array(LabSchema)) ?? []);
 export const getPrompts = cache((n: number): PromptItem[] => readJson(path.join(weekDir(n), "prompts.json"), z.array(PromptSchema)) ?? []);
+export const getResources = cache((n: number): Resource[] => readJson(path.join(weekDir(n), "resources.json"), z.array(ResourceSchema)) ?? []);
 export const getAssessment = cache((n: number): Assessment | null => readJson(path.join(weekDir(n), "assessment.json"), AssessmentSchema));
 
 export const getMarkdown = cache((n: number, name: "cheatsheet" | "revision"): string | null => {

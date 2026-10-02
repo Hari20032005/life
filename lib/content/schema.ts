@@ -117,3 +117,11 @@ export const AssessmentSchema = z.object({
   parts: z.array(z.object({ title: z.string(), points: z.number(), tasks: z.array(z.string()) })),
 });
 export type Assessment = z.infer<typeof AssessmentSchema>;
+
+export const ResourceSchema = z.object({
+  title: z.string(),
+  url: z.string().url(),
+  why: z.string(),
+  kind: z.enum(["reference", "course", "book", "tool", "spec", "pricing"]),
+});
+export type Resource = z.infer<typeof ResourceSchema>;

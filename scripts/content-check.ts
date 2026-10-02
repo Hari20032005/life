@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { z } from "zod";
-import { WeekSchema, LessonMetaSchema, QuizSchema, InterviewItemSchema, FlashcardSchema, LabSchema, PromptSchema, AssessmentSchema } from "../lib/content/schema";
+import { WeekSchema, LessonMetaSchema, QuizSchema, InterviewItemSchema, FlashcardSchema, LabSchema, PromptSchema, AssessmentSchema, ResourceSchema } from "../lib/content/schema";
 
 const root = path.join(process.cwd(), "content");
 let errors = 0;
@@ -31,6 +31,7 @@ for (const n of [0, 1, 2, 3, 4, 5, 6]) {
   json(path.join(dir, "labs.json"), z.array(LabSchema));
   json(path.join(dir, "prompts.json"), z.array(PromptSchema));
   json(path.join(dir, "assessment.json"), AssessmentSchema);
+  json(path.join(dir, "resources.json"), z.array(ResourceSchema));
 
   const ld = path.join(dir, "lessons");
   if (fs.existsSync(ld)) {

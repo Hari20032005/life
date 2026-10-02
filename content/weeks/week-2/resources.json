@@ -1,0 +1,56 @@
+[
+  {
+    "title": "OWASP Top 10",
+    "url": "https://owasp.org/www-project-top-ten/",
+    "why": "The standard list of web application risks.",
+    "kind": "reference"
+  },
+  {
+    "title": "OWASP Cheat Sheet Series",
+    "url": "https://cheatsheetseries.owasp.org/",
+    "why": "Practical guidance: password storage, session management, CSRF, authorization.",
+    "kind": "reference"
+  },
+  {
+    "title": "RFC 6749: OAuth 2.0",
+    "url": "https://www.rfc-editor.org/rfc/rfc6749",
+    "why": "The authorization framework behind 'Sign in with Google'.",
+    "kind": "spec"
+  },
+  {
+    "title": "OpenID Connect Core 1.0",
+    "url": "https://openid.net/specs/openid-connect-core-1_0.html",
+    "why": "The identity layer on top of OAuth.",
+    "kind": "spec"
+  },
+  {
+    "title": "RFC 6238: TOTP",
+    "url": "https://www.rfc-editor.org/rfc/rfc6238",
+    "why": "Time-based one-time passwords, with test vectors.",
+    "kind": "spec"
+  },
+  {
+    "title": "Helmet",
+    "url": "https://helmetjs.github.io/",
+    "why": "Security headers for Express.",
+    "kind": "reference"
+  },
+  {
+    "title": "Semgrep documentation",
+    "url": "https://semgrep.dev/docs/",
+    "why": "Static analysis rules and CI use.",
+    "kind": "reference"
+  },
+  {
+    "title": "gitleaks",
+    "url": "https://github.com/gitleaks/gitleaks",
+    "why": "Secret scanning for files and git history.",
+    "kind": "tool"
+  },
+  {
+    "title": "GitHub Actions documentation",
+    "url": "https://docs.github.com/en/actions",
+    "why": "Workflows, service containers, branch protection.",
+    "kind": "reference"
+  }
+]

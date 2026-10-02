@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Claude API documentation",
+    "url": "https://docs.anthropic.com/",
+    "why": "Messages API, tool use, structured outputs, streaming, prompt caching.",
+    "kind": "reference"
+  },
+  {
+    "title": "Model Context Protocol",
+    "url": "https://modelcontextprotocol.io/",
+    "why": "Specification and SDKs for MCP.",
+    "kind": "spec"
+  },
+  {
+    "title": "pgvector",
+    "url": "https://github.com/pgvector/pgvector",
+    "why": "Vector similarity search in Postgres.",
+    "kind": "reference"
+  },
+  {
+    "title": "OWASP Top 10 for LLM Applications",
+    "url": "https://genai.owasp.org/llm-top-10/",
+    "why": "Prompt injection and the other LLM-specific risks.",
+    "kind": "reference"
+  },
+  {
+    "title": "Langfuse documentation",
+    "url": "https://langfuse.com/docs",
+    "why": "Tracing and evaluation for LLM apps.",
+    "kind": "reference"
+  },
+  {
+    "title": "Voyage AI documentation",
+    "url": "https://docs.voyageai.com/",
+    "why": "Embedding models (Anthropic has no embeddings API).",
+    "kind": "reference"
+  },
+  {
+    "title": "OpenAI: Embeddings guide",
+    "url": "https://platform.openai.com/docs/guides/embeddings",
+    "why": "text-embedding-3-small and usage guidance.",
+    "kind": "reference"
+  }
+]

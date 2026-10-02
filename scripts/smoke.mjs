@@ -69,6 +69,19 @@ for (const u of ["/", "/program", "/roadmap", "/project", "/assessments", "/inte
   const r = await p.goto(base + u, { waitUntil: "load" });
   ok(`${u} -> ${r.status()}`, r.status() === 200);
 }
+
+// Resources tab: renders every curated link, opens externally and safely, and passes axe with the tab open
+{
+  await p.goto(`${base}/weeks/3`, { waitUntil: "networkidle" });
+  await p.getByRole("tab", { name: "Resources" }).click();
+  const links = await p.locator("main ul a[target=_blank]").evaluateAll((as) => as.map((a) => ({ rel: a.rel, href: a.href })));
+  ok(`resources tab lists links (${links.length}) all rel=noopener noreferrer, https`, links.length >= 6 && links.every((l) => /noopener/.test(l.rel) && /noreferrer/.test(l.rel) && l.href.startsWith("https://")));
+  const fs = await import("node:fs");
+  await p.addScriptTag({ content: fs.readFileSync("node_modules/axe-core/axe.min.js", "utf8") });
+  const v = await p.evaluate(async () => (await window.axe.run(document, { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "best-practice"] })).violations.map((x) => x.id + " x" + x.nodes.length));
+  ok(`resources tab has no axe violations ${v.join(", ")}`, v.length === 0);
+}
+
 // mobile overflow
 const m = await b.newPage({ viewport: { width: 360, height: 800 } });
 for (const u of ["/", "/weeks/0/day-1/url-to-page", "/weeks/1/day-3/sql-foundations", "/project"]) {

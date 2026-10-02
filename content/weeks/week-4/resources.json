@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Docker documentation",
+    "url": "https://docs.docker.com/",
+    "why": "Images, Dockerfile best practices, networking.",
+    "kind": "reference"
+  },
+  {
+    "title": "Docker Compose",
+    "url": "https://docs.docker.com/compose/",
+    "why": "Multi-container stacks.",
+    "kind": "reference"
+  },
+  {
+    "title": "Caddy documentation",
+    "url": "https://caddyserver.com/docs/",
+    "why": "Reverse proxy and automatic HTTPS.",
+    "kind": "reference"
+  },
+  {
+    "title": "Let's Encrypt documentation",
+    "url": "https://letsencrypt.org/docs/",
+    "why": "How certificates are issued, rate limits and staging.",
+    "kind": "reference"
+  },
+  {
+    "title": "GitHub Container Registry",
+    "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+    "why": "Pushing and pulling images from CI.",
+    "kind": "reference"
+  },
+  {
+    "title": "Coolify documentation",
+    "url": "https://coolify.io/docs/",
+    "why": "Self-hosted PaaS (Week 4 second deployment).",
+    "kind": "reference"
+  },
+  {
+    "title": "Dokploy documentation",
+    "url": "https://docs.dokploy.com/",
+    "why": "Self-hosted PaaS (alternative to Coolify).",
+    "kind": "reference"
+  },
+  {
+    "title": "Sentry documentation",
+    "url": "https://docs.sentry.io/",
+    "why": "Error tracking for Node and browsers.",
+    "kind": "reference"
+  },
+  {
+    "title": "Uptime Kuma",
+    "url": "https://github.com/louislam/uptime-kuma",
+    "why": "Self-hosted uptime monitoring and alerts.",
+    "kind": "tool"
+  },
+  {
+    "title": "PostgreSQL: pg_dump",
+    "url": "https://www.postgresql.org/docs/current/app-pgdump.html",
+    "why": "Backup formats and options; pair with pg_restore.",
+    "kind": "reference"
+  },
+  {
+    "title": "Hetzner Cloud",
+    "url": "https://www.hetzner.com/cloud",
+    "why": "One of the VPS providers to price (look up current numbers yourself).",
+    "kind": "pricing"
+  },
+  {
+    "title": "Convex documentation",
+    "url": "https://docs.convex.dev/",
+    "why": "The reactive backend model discussed in Day 4.",
+    "kind": "reference"
+  }
+]

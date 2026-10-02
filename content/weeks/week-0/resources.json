@@ -1,0 +1,50 @@
+[
+  {
+    "title": "MDN: Learn web development",
+    "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development",
+    "why": "The best free reference for HTML, CSS and JavaScript; use it when a lesson says 'look up the element/property'.",
+    "kind": "reference"
+  },
+  {
+    "title": "MDN: Fetch API",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API",
+    "why": "Exactly how fetch, Response and errors behave.",
+    "kind": "reference"
+  },
+  {
+    "title": "web.dev Learn",
+    "url": "https://web.dev/learn",
+    "why": "Short, high-quality courses on responsive design, accessibility and performance.",
+    "kind": "course"
+  },
+  {
+    "title": "Pro Git (free book)",
+    "url": "https://git-scm.com/book/en/v2",
+    "why": "Chapters 1-3 cover everything in Week 0 and most of Week 1.",
+    "kind": "book"
+  },
+  {
+    "title": "W3C Markup Validator",
+    "url": "https://validator.w3.org/",
+    "why": "The validator used in the Day 2 acceptance criteria.",
+    "kind": "tool"
+  },
+  {
+    "title": "Open-Meteo API docs",
+    "url": "https://open-meteo.com/en/docs",
+    "why": "Forecast API used by the weather widget (no key needed).",
+    "kind": "reference"
+  },
+  {
+    "title": "GitHub Pages documentation",
+    "url": "https://docs.github.com/en/pages",
+    "why": "Publishing your portfolio.",
+    "kind": "reference"
+  },
+  {
+    "title": "Excalidraw",
+    "url": "https://excalidraw.com/",
+    "why": "Quick diagrams for the URL-to-page flow.",
+    "kind": "tool"
+  }
+]

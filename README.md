@@ -32,6 +32,7 @@ npm run lint            # tsc --noEmit
 npm run ci:lint         # static lint of .github/workflows (scripts/files it references exist, YAML parses)
 npm run build && npx next start -p 3200 &
 npm run check:browser   # smoke test, every Mermaid diagram renders, axe accessibility on every lesson + key pages (light and dark)
+npm run links:check     # needs normal internet access: resource links (404/DNS = fail; bot-blocking 403/429 = warning)
 npm run labs:check      # runnable labs (Weeks 0, 2, 4, 5, 6): broken fails exactly its bugs, fixed passes
 npm run labs:check:browser   # Week 3 lab (needs Chromium)
 npm run labs:check:db        # Week 1 lab (needs Postgres, see labs/README.md)
@@ -47,7 +48,7 @@ The browser scripts default to `/opt/pw-browsers/chromium`; override with `CHROM
 | Official spec for Weeks 0-6 (every day: tasks, acceptance criteria, broken labs, rubrics) | Done |
 | Booking-system evolution W1→W6 (diagrams, folders, schema, API, flows) | Done |
 | Weekly assessments (rubric-mapped), mid-course, final, 4 mock interviews, AI prompts per week | Done |
-| Cheat sheet, revision notes, quiz, flashcards, interview bank, labs for Weeks 0-6 | Done |
+| Cheat sheet, revision notes, quiz, flashcards, interview bank, labs, curated resources (60 links) for Weeks 0-6 | Done |
 | Lessons (57): W0 9, W1 11, W2 9, W3 7, W4 8, W5 8, W6 5. Every Mon-Fri main topic, every Saturday debugging method, and a Sunday project guide for Weeks 0-5; supplementary lessons on the event loop, API styles/webhooks, dependency scanning, TOTP 2FA, backend models (Convex), MCP | Done |
 | Runnable labs with detectors: W0, W1 (real Postgres), W2, W3 (SSR React in Chromium), W4 (config audit), W5 (simulated model), W6 (AI patch review); checkers proven precise one bug at a time | Done |
 | Accessibility: axe-core clean on all 57 lessons + 17 key pages in light and dark; 71 Mermaid diagrams render | Verified locally |
@@ -58,5 +59,6 @@ The browser scripts default to `/opt/pw-browsers/chromium`; override with `CHROM
 - **Labs are rehearsals, not the real thing.** The Week 4 lab audits configuration files; the graded task still requires a real VPS with DNS and HTTPS. The Week 5 lab uses a deterministic worst-case model stub and word-overlap retrieval, so it tests the code around the model, not real LLM behaviour or real traces.
 - **Lesson code was not executed as a complete application.** What *was* executed and verified: the labs, the TOTP implementation (against the RFC 4226/6238 test vectors), the webhook verifier, and the event-loop demo. The Anthropic SDK snippets in Week 5 follow the SDK documentation but were not run against the API (no key available).
 - **Some items still get a paragraph, not a lesson:** Vite specifics, Uptime Kuma/Better Stack setup, Coolify/Dokploy walkthroughs, Playwright configuration, Excalidraw. Learners are told what to look for and which docs to read.
+- **The 60 resource links are NOT machine-verified.** They point to the official sites for each tool, but the build sandbox could reach only 4 of those hosts (its network policy blocks the rest), so `npm run links:check` has to be run from a normal network. It is wired into CI as an informational step. The checker itself was tested against a real 404.
 - **Prices and hosting costs are intentionally not hard-coded;** lessons tell learners to look up and date their own numbers.
 - **Assessments are self-scored checklists,** not graded submissions; there is no backend, accounts or instructor view (progress lives in the browser's localStorage).
