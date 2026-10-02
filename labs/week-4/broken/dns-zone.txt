@@ -1,0 +1,5 @@
+; example.com zone (as configured at the registrar)
+; name  ttl   type  value
+app     300   A     198.51.100.7
+api     300   A     203.0.113.10
+www     300   CNAME example.com.

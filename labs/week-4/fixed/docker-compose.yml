@@ -1,0 +1,39 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: booking
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    logging: *default-logging
+
+  api:
+    image: ghcr.io/acme/booking-api:latest
+    env_file: .env.production
+    depends_on: [db]
+    ports: ["127.0.0.1:4000:4000"]
+    logging: *default-logging
+
+  web:
+    image: ghcr.io/acme/booking-web:latest
+    environment:
+      API_INTERNAL_URL: http://api:4000
+    ports: ["127.0.0.1:3000:3000"]
+    logging: *default-logging
+
+  caddy:
+    image: caddy:2
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    logging: *default-logging
+
+volumes:
+  pgdata:

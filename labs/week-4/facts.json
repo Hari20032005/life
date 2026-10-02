@@ -1,0 +1,6 @@
+{
+  "domain": "example.com",
+  "serverIp": "203.0.113.10",
+  "frontendOrigin": "https://app.example.com",
+  "hosts": ["app.example.com", "api.example.com"]
+}
