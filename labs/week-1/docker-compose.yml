@@ -1,0 +1,6 @@
+# Postgres for the Week 1 lab. The checker connects to LAB_PG_URL (default below).
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment: { POSTGRES_PASSWORD: postgres }
+    ports: ["127.0.0.1:54329:5432"]

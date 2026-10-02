@@ -14,7 +14,10 @@
   "projectStage": "Booking API v1 — architecture: Express routes → services → data access (Drizzle) → Postgres (pgvector image). Starts from a messy WhatsApp message from a salon owner.",
   "days": [
     {
-      "day": 1, "weekday": "Mon", "title": "AI Dev Setup, TypeScript + Git Workflow", "aiMode": "mixed",
+      "day": 1,
+      "weekday": "Mon",
+      "title": "AI Dev Setup, TypeScript + Git Workflow",
+      "aiMode": "mixed",
       "learn": [
         "Node.js, npm, package.json scripts, TypeScript basics (types, interfaces, unions), folder structure, ESLint + Prettier, Vitest basics",
         "Modern JavaScript: arrow functions, template strings, destructuring, spread/rest, optional chaining, nullish coalescing, ES modules, map/filter/reduce/find/some/every/sort, immutability, callbacks, closures, the event loop",
@@ -37,7 +40,10 @@
       ]
     },
     {
-      "day": 2, "weekday": "Tue", "title": "HTTP Server + REST", "aiMode": "mixed",
+      "day": 2,
+      "weekday": "Tue",
+      "title": "HTTP Server + REST",
+      "aiMode": "mixed",
       "learn": [
         "API styles (REST, webhooks, WebSockets) and when each fits",
         "Vite as a frontend dev server, AbortController",
@@ -62,7 +68,10 @@
       ]
     },
     {
-      "day": 3, "weekday": "Wed", "title": "Postgres + SQL by Hand", "aiMode": "tutor-only",
+      "day": 3,
+      "weekday": "Wed",
+      "title": "Postgres + SQL by Hand",
+      "aiMode": "tutor-only",
       "learn": [
         "Run Postgres with docker compose (pgvector/pgvector:pg17 image so Week 5 works without changes); connect with psql and a GUI",
         "Tables, data types, primary keys, foreign keys, ON DELETE CASCADE vs RESTRICT, UNIQUE, NOT NULL, CHECK, defaults, timestamptz",
@@ -85,7 +94,10 @@
       ]
     },
     {
-      "day": 4, "weekday": "Thu", "title": "Connect the API to the Database", "aiMode": "mixed",
+      "day": 4,
+      "weekday": "Thu",
+      "title": "Connect the API to the Database",
+      "aiMode": "mixed",
       "learn": [
         "Drizzle ORM (and reading the SQL it generates), parameterized queries, migrations as versioned files, seed scripts",
         "Separating routes, services and data access; connection pools; handling database errors",
@@ -111,8 +123,14 @@
       ]
     },
     {
-      "day": 5, "weekday": "Fri", "title": "Validation + Tests", "aiMode": "mixed",
-      "learn": ["Zod schemas, a consistent error response format", "Vitest + Supertest, test database setup, what makes a good test, how to review tests an AI wrote"],
+      "day": 5,
+      "weekday": "Fri",
+      "title": "Validation + Tests",
+      "aiMode": "mixed",
+      "learn": [
+        "Zod schemas, a consistent error response format",
+        "Vitest + Supertest, test database setup, what makes a good test, how to review tests an AI wrote"
+      ],
       "tasks": [
         "Add Zod validation to every route.",
         "Write a happy-path test and at least one failure test per route.",
@@ -126,8 +144,15 @@
       ]
     },
     {
-      "day": 6, "weekday": "Sat", "title": "Debug Lab (no AI)", "aiMode": "no-ai",
-      "learn": ["VS Code debugger, breakpoints, reading stack traces", "Reading Postgres logs", "The raw pg driver (node-postgres) and its connection pool"],
+      "day": 6,
+      "weekday": "Sat",
+      "title": "Debug Lab (no AI)",
+      "aiMode": "no-ai",
+      "learn": [
+        "VS Code debugger, breakpoints, reading stack traces",
+        "Reading Postgres logs",
+        "The raw pg driver (node-postgres) and its connection pool"
+      ],
       "brokenLab": [
         "A SQL query built by string concatenation (SQL injection)",
         "A missing await that returns a Promise instead of data",
@@ -137,7 +162,10 @@
         "A price column stored as text, so sorting by price is wrong",
         "A GROUP BY report that returns duplicate rows"
       ],
-      "tasks": ["Fix all seven bugs in the provided booking API, with a test for each fix."],
+      "tasks": [
+        "A runnable broken booking API is in the repository at labs/week-1/broken (see labs/README.md; needs Postgres via docker compose in labs/week-1). Fix it without AI; schema fixes go in a NEW migration (002_*.sql). Check with: node labs/week-1/check.mjs broken",
+        "Fix all seven bugs in the provided booking API, with a test for each fix."
+      ],
       "acceptance": [
         "All seven fixed, with a test for each fix.",
         "No unhandled promise rejections.",
@@ -146,7 +174,11 @@
       ]
     },
     {
-      "day": 7, "weekday": "Sun", "title": "Weekly Project: Booking API v1", "aiMode": "build-day", "isProjectDay": true,
+      "day": 7,
+      "weekday": "Sun",
+      "title": "Weekly Project: Booking API v1",
+      "aiMode": "build-day",
+      "isProjectDay": true,
       "learn": [],
       "tasks": [
         "Starts from a client brief: a messy WhatsApp message from a salon owner about double bookings and phone cancellations.",
@@ -156,7 +188,9 @@
         "CSV import script for the client's customer list: imports the good rows, reports bad rows with line numbers, and a re-run creates no duplicates.",
         "Migrations + seed, Zod validation, tests, Bruno collection."
       ],
-      "acceptance": ["See the rubric on the Project tab."]
+      "acceptance": [
+        "See the rubric on the Project tab."
+      ]
     }
   ],
   "project": {
@@ -174,11 +208,26 @@
       "Rebuild the availability endpoint in Python (FastAPI), Go or Ruby (Rails)"
     ],
     "rubric": [
-      { "item": "Scope doc + schema design", "points": 20 },
-      { "item": "API correctness + status codes", "points": 25 },
-      { "item": "Validation + error handling", "points": 20 },
-      { "item": "Tests", "points": 20 },
-      { "item": "README + reproducible setup", "points": 15 }
+      {
+        "item": "Scope doc + schema design",
+        "points": 20
+      },
+      {
+        "item": "API correctness + status codes",
+        "points": 25
+      },
+      {
+        "item": "Validation + error handling",
+        "points": 20
+      },
+      {
+        "item": "Tests",
+        "points": 20
+      },
+      {
+        "item": "README + reproducible setup",
+        "points": 15
+      }
     ]
   }
 }
