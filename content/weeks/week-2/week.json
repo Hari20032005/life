@@ -14,8 +14,13 @@
   "projectStage": "Booking API v2 — adds users table, signup/login/logout/me, roles (owner, staff, customer), Google login, security middleware, CI.",
   "days": [
     {
-      "day": 1, "weekday": "Mon", "title": "Authentication", "aiMode": "mixed",
-      "learn": ["Password hashing (argon2 or bcrypt), sessions vs JWT, access and refresh tokens, httpOnly cookies, token expiry"],
+      "day": 1,
+      "weekday": "Mon",
+      "title": "Authentication",
+      "aiMode": "mixed",
+      "learn": [
+        "Password hashing (argon2 or bcrypt), sessions vs JWT, access and refresh tokens, httpOnly cookies, token expiry"
+      ],
       "tasks": [
         "Add a users table (email with a unique index on lower(email), password_hash, role) as a migration, and link customers.user_id and staff.user_id to it.",
         "Build POST /signup, POST /login, POST /logout and GET /me.",
@@ -29,8 +34,13 @@
       ]
     },
     {
-      "day": 2, "weekday": "Tue", "title": "Authorization + Roles", "aiMode": "mixed",
-      "learn": ["Authentication vs authorization, roles (owner, staff, customer), ownership checks, permission middleware, 401 vs 403"],
+      "day": 2,
+      "weekday": "Tue",
+      "title": "Authorization + Roles",
+      "aiMode": "mixed",
+      "learn": [
+        "Authentication vs authorization, roles (owner, staff, customer), ownership checks, permission middleware, 401 vs 403"
+      ],
       "tasks": [
         "Owners manage services and staff. Staff see their own schedule. Customers see and cancel only their own bookings.",
         "Add a permission middleware and use it on every route."
@@ -42,7 +52,10 @@
       ]
     },
     {
-      "day": 3, "weekday": "Wed", "title": "Google Login (OAuth)", "aiMode": "mixed",
+      "day": 3,
+      "weekday": "Wed",
+      "title": "Google Login (OAuth)",
+      "aiMode": "mixed",
       "learn": [
         "How OAuth 2.0 and OpenID Connect work (redirect, code, token exchange, state, PKCE)",
         "Using a maintained library on top of the Day 1 auth (Arctic, or Passport.js with passport-google-oauth20)",
@@ -60,8 +73,13 @@
       ]
     },
     {
-      "day": 4, "weekday": "Thu", "title": "Security Hardening", "aiMode": "mixed",
-      "learn": ["OWASP Top 10 basics, Helmet, CORS allowlist, rate limiting, CSRF for cookie auth, input validation, secrets management, dependency scanning (npm audit, Semgrep)"],
+      "day": 4,
+      "weekday": "Thu",
+      "title": "Security Hardening",
+      "aiMode": "mixed",
+      "learn": [
+        "OWASP Top 10 basics, Helmet, CORS allowlist, rate limiting, CSRF for cookie auth, input validation, secrets management, dependency scanning (npm audit, Semgrep)"
+      ],
       "tasks": [
         "Add Helmet, a CORS allowlist, and rate limiting on login and signup.",
         "Add an Origin check on every state-changing route (CSRF protection for cookie auth).",
@@ -76,8 +94,13 @@
       ]
     },
     {
-      "day": 5, "weekday": "Fri", "title": "Integration Tests + CI", "aiMode": "mixed",
-      "learn": ["Integration tests against a real test database, fixtures, testing auth flows, coverage reports, GitHub Actions"],
+      "day": 5,
+      "weekday": "Fri",
+      "title": "Integration Tests + CI",
+      "aiMode": "mixed",
+      "learn": [
+        "Integration tests against a real test database, fixtures, testing auth flows, coverage reports, GitHub Actions"
+      ],
       "tasks": [
         "Write tests for signup, login, logout, roles and ownership.",
         "Add a GitHub Actions workflow that runs lint + tests on every PR (with a pgvector/pgvector:pg17 service container, the same image as local).",
@@ -91,8 +114,14 @@
       ]
     },
     {
-      "day": 6, "weekday": "Sat", "title": "Debug Lab (no AI)", "aiMode": "no-ai",
-      "learn": ["Testing attacks with curl and Bruno, reading auth logs", "Finding leaked secrets in Git history (git log -p, gitleaks)"],
+      "day": 6,
+      "weekday": "Sat",
+      "title": "Debug Lab (no AI)",
+      "aiMode": "no-ai",
+      "learn": [
+        "Testing attacks with curl and Bruno, reading auth logs",
+        "Finding leaked secrets in Git history (git log -p, gitleaks)"
+      ],
       "brokenLab": [
         "Passwords stored in plain text",
         "JWTs that never expire",
@@ -100,7 +129,10 @@
         "Any logged-in user can cancel anyone's booking",
         "A secret committed to Git history"
       ],
-      "tasks": ["Fix all five issues in the provided auth system, with tests for each fix."],
+      "tasks": [
+        "A runnable broken auth server is in the repository at labs/week-2/broken (see labs/README.md; Node 22+, no installs). Fix it without AI, then check with: node --no-warnings labs/week-2/check.mjs broken (copy your fixed server.mjs over it, or compare to the 5 failing checks)",
+        "Fix all five issues in the provided auth system, with tests for each fix."
+      ],
       "acceptance": [
         "Login is secure, the SQL injection attempt fails, and expired tokens are rejected.",
         "Users can only change their own bookings.",
@@ -110,7 +142,11 @@
       ]
     },
     {
-      "day": 7, "weekday": "Sun", "title": "Weekly Project: Booking API v2", "aiMode": "build-day", "isProjectDay": true,
+      "day": 7,
+      "weekday": "Sun",
+      "title": "Weekly Project: Booking API v2",
+      "aiMode": "build-day",
+      "isProjectDay": true,
       "learn": [],
       "tasks": [
         "Client message: \"Staff keep seeing each other's customers, and someone cancelled a booking that wasn't theirs.\" Update the scope first.",
@@ -120,7 +156,9 @@
         "Integration tests running in GitHub Actions.",
         "Security notes in the README: what was tested and how."
       ],
-      "acceptance": ["See the rubric on the Project tab."]
+      "acceptance": [
+        "See the rubric on the Project tab."
+      ]
     }
   ],
   "project": {
@@ -134,13 +172,31 @@
       "Integration tests running in GitHub Actions",
       "Security notes in the README: what was tested and how"
     ],
-    "stretch": ["Two-factor login (TOTP) for owner accounts", "Rebuild signup and login in Ruby (Rails)"],
+    "stretch": [
+      "Two-factor login (TOTP) for owner accounts",
+      "Rebuild signup and login in Ruby (Rails)"
+    ],
     "rubric": [
-      { "item": "Auth works securely", "points": 30 },
-      { "item": "Roles + ownership correct", "points": 25 },
-      { "item": "Security hardening", "points": 15 },
-      { "item": "Tests + CI", "points": 20 },
-      { "item": "README + security notes", "points": 10 }
+      {
+        "item": "Auth works securely",
+        "points": 30
+      },
+      {
+        "item": "Roles + ownership correct",
+        "points": 25
+      },
+      {
+        "item": "Security hardening",
+        "points": 15
+      },
+      {
+        "item": "Tests + CI",
+        "points": 20
+      },
+      {
+        "item": "README + security notes",
+        "points": 10
+      }
     ]
   }
 }
