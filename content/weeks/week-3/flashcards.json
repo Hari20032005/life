@@ -1,0 +1,14 @@
+[
+{"id":"w3f1","topic":"React","front":"Why keys?","back":"Identify list items across renders so state and DOM map to the right item. Use stable ids, not indexes."},
+{"id":"w3f2","topic":"React","front":"State update rule?","back":"Never mutate. Create a new array/object (spread, map, filter) and set it."},
+{"id":"w3f3","topic":"Next.js","front":"Server vs Client Component?","back":"Server: default, no client JS, can await data. Client: 'use client', hooks and events."},
+{"id":"w3f4","topic":"Next.js","front":"proxy.ts?","back":"Next.js 16 name for middleware.ts: runs before requests for redirects/rewrites. Coarse auth gating only."},
+{"id":"w3f5","topic":"Forms","front":"Why share the Zod schema?","back":"One contract validates in browser and API; types inferred from it."},
+{"id":"w3f6","topic":"Fetch","front":"Cross-origin cookies need…?","back":"fetch credentials:'include' + CORS exact origin + Allow-Credentials true."},
+{"id":"w3f7","topic":"TanStack Query","front":"useQuery vs useMutation?","back":"Query reads server state; mutation changes it, then invalidate queries."},
+{"id":"w3f8","topic":"Concurrency","front":"HTTP 409 in UI?","back":"Expected conflict: show a clear message, refetch, let the user choose again."},
+{"id":"w3f9","topic":"Auth","front":"Is hiding buttons security?","back":"No. Backend checks roles and ownership."},
+{"id":"w3f10","topic":"Time","front":"Time rule of thumb?","back":"UTC/ISO with offset in storage and transport; explicit business zone when displaying."},
+{"id":"w3f11","topic":"a11y","front":"Lighthouse accessibility target?","back":"90+, plus full keyboard navigation and visible focus."},
+{"id":"w3f12","topic":"Testing","front":"RTL vs Playwright?","back":"RTL: component behaviour in jsdom. Playwright: whole app in a real browser."}
+]

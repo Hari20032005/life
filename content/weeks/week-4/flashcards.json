@@ -1,0 +1,14 @@
+[
+{"id":"w4f1","topic":"Docker","front":"Image vs container?","back":"Image: immutable layered template. Container: running instance with a writable layer."},
+{"id":"w4f2","topic":"Docker","front":"Why a volume for Postgres?","back":"Containers are ephemeral; the volume keeps data across recreate/restart."},
+{"id":"w4f3","topic":"Docker","front":"Internal vs public API URL?","back":"Browser uses https://api.domain (public, baked at build). Server code in Docker uses http://api:4000 (internal)."},
+{"id":"w4f4","topic":"Linux","front":"SSH hardening checklist?","back":"Key auth only, PasswordAuthentication no, PermitRootLogin no, non-root sudo user, test second session first."},
+{"id":"w4f5","topic":"Linux","front":"Docker vs ufw?","back":"Published ports bypass ufw. Bind to 127.0.0.1 and publish only Caddy 80/443."},
+{"id":"w4f6","topic":"Hosting","front":"VPS vs PaaS?","back":"VPS: cheap, full control, you do ops. PaaS: pricier, managed ops, faster start."},
+{"id":"w4f7","topic":"DNS","front":"A, CNAME, TXT?","back":"A: IPv4. CNAME: alias to another name. TXT: text/verification."},
+{"id":"w4f8","topic":"HTTPS","front":"What does Caddy do for you?","back":"Reverse proxy + automatic Let's Encrypt certificates + HTTP to HTTPS redirect."},
+{"id":"w4f9","topic":"Cookies","front":"Production cookie flags?","back":"HttpOnly; Secure; SameSite=Lax; Domain=.yourdomain (from env)."},
+{"id":"w4f10","topic":"CI/CD","front":"Deploy order?","back":"Test → build/push image (SHA) → pull on server → migrate → up -d → health check."},
+{"id":"w4f11","topic":"Backups","front":"Backup rules?","back":"Off-server, scheduled, retained, and restore-tested."},
+{"id":"w4f12","topic":"Ops","front":"First debug commands?","back":"docker compose ps, docker logs, docker inspect, curl -v, dig, df -h, journalctl."}
+]
