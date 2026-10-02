@@ -1,0 +1,15 @@
+[
+{"id":"w5f1","topic":"LLM","front":"Token / context window?","back":"Token: chunk of text the model reads/writes. Context window: total tokens (input + output) in one request."},
+{"id":"w5f2","topic":"LLM","front":"Why call LLMs from the backend?","back":"Protect the key, control data, validate output, rate limit, track cost."},
+{"id":"w5f3","topic":"LLM","front":"Structured output pattern?","back":"JSON schema/Zod format + validate again + handle failure (retry/fallback). Never pass unvalidated output on."},
+{"id":"w5f4","topic":"Prompts","front":"What goes in a system prompt?","back":"Role, tone, business facts, rules, refusals, instruction that documents/user text are data. Version it like code."},
+{"id":"w5f5","topic":"Security","front":"Direct vs indirect injection?","back":"Direct: attacker types it. Indirect: hidden in documents/emails/pages the model reads."},
+{"id":"w5f6","topic":"Security","front":"Can a prompt fully stop injection?","back":"No. Use least privilege, confirmation, validation, monitoring."},
+{"id":"w5f7","topic":"RAG","front":"RAG in one line?","back":"Retrieve relevant chunks at question time and answer only from them, with citations."},
+{"id":"w5f8","topic":"RAG","front":"Embedding rule?","back":"Same embedding model (and dimension) for ingest, CI and production."},
+{"id":"w5f9","topic":"RAG","front":"Why hybrid search?","back":"Vectors catch meaning; keywords catch exact terms like names, prices, SKUs."},
+{"id":"w5f10","topic":"Tools","front":"Pending-action pattern?","back":"Tool stores intent; server executes only when the user's authenticated Confirm request sends the action id."},
+{"id":"w5f11","topic":"Tools","front":"Time args for tools?","back":"ISO 8601 with UTC offset; reject missing offset or past dates."},
+{"id":"w5f12","topic":"Evals","front":"Exact check vs LLM judge?","back":"Prefer exact checks (text, tool calls, DB state); judges for subjective quality with human calibration."},
+{"id":"w5f13","topic":"Cost","front":"Cost levers?","back":"Trim history, fewer/shorter chunks, prompt caching, right-sized model, max_tokens and step caps, per-user limits."}
+]
