@@ -18,6 +18,9 @@ function json<T>(file: string, schema: z.ZodType<T>) {
 
 const REQUIRED_HEADINGS = ["## What", "## Why", "## How", "## When", "## Where", "Common mistakes", "Industry"];
 
+async function main() {
+const { compile } = await import("@mdx-js/mdx");
+const remarkGfm = (await import("remark-gfm")).default;
 for (const n of [0, 1, 2, 3, 4, 5, 6]) {
   const dir = path.join(root, "weeks", `week-${n}`);
   if (!fs.existsSync(path.join(dir, "week.json"))) { fail(`week-${n}/week.json missing`); continue; }
@@ -36,9 +39,13 @@ for (const n of [0, 1, 2, 3, 4, 5, 6]) {
       const m = LessonMetaSchema.safeParse(data);
       if (!m.success) fail(`week-${n}/lessons/${f}\n${z.prettifyError(m.error)}`);
       for (const h of REQUIRED_HEADINGS) if (!content.includes(h)) fail(`week-${n}/lessons/${f} is missing section "${h}"`);
+      try { await compile(content, { remarkPlugins: [remarkGfm] }); } catch (e) { fail(`week-${n}/lessons/${f} does not compile as MDX: ${(e as Error).message}`); }
       if (!content.includes("<Levels>")) fail(`week-${n}/lessons/${f} is missing the four <Levels>`);
     }
   }
 }
+}
+main().then(() => {
 if (errors) { console.error(`\n${errors} content problem(s)`); process.exit(1); }
 console.log("✓ content OK");
+});

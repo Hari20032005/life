@@ -1,0 +1,14 @@
+[
+{"id":"w2f1","topic":"Auth","front":"AuthN vs AuthZ?","back":"Authentication: who are you. Authorization: what may you do (role + ownership)."},
+{"id":"w2f2","topic":"Auth","front":"401 vs 403?","back":"401: not logged in/invalid session. 403: logged in but forbidden."},
+{"id":"w2f3","topic":"Passwords","front":"Why salt + slow hash?","back":"Salt defeats rainbow tables; slowness makes brute force expensive."},
+{"id":"w2f4","topic":"JWT","front":"What is in a JWT?","back":"header.payload.signature. Payload is readable, signature proves integrity. Always set exp."},
+{"id":"w2f5","topic":"Cookies","front":"httpOnly + Secure + SameSite?","back":"httpOnly: no JS access. Secure: HTTPS only. SameSite: limits cross-site sending."},
+{"id":"w2f6","topic":"OAuth","front":"Auth code flow in 4 steps?","back":"Redirect with state/PKCE → user consents → callback with code → server exchanges code for tokens."},
+{"id":"w2f7","topic":"OAuth","front":"When may Google be linked to an existing account?","back":"Only if email_verified AND the user confirms their existing password."},
+{"id":"w2f8","topic":"Security","front":"IDOR?","back":"Changing an id to access another user's object because ownership isn't checked."},
+{"id":"w2f9","topic":"Security","front":"CSRF defence for cookie auth?","back":"SameSite cookies + Origin allowlist on state-changing methods (+ tokens if needed)."},
+{"id":"w2f10","topic":"Security","front":"Mass assignment?","back":"Client sets fields it shouldn't (role=owner). Allow-list fields."},
+{"id":"w2f11","topic":"CI","front":"Branch protection purpose?","back":"Blocks merges when required checks fail; enable 'do not allow bypassing'."},
+{"id":"w2f12","topic":"Secrets","front":"Leaked secret in git history?","back":"Rotate it. Deleting the file doesn't remove history."}
+]
