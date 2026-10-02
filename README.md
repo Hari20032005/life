@@ -51,7 +51,7 @@ The browser scripts default to `/opt/pw-browsers/chromium`; override with `CHROM
 
 - Saturday debug-lab days have the method lesson (Week 0, Week 6) and hidden-solution exercises, but no per-week lesson; Week 3-5 Day 6 topics (React DevTools/hydration, docker/Caddy logs, reading LLM traces) are only in the labs.
 - Lessons cover the main topic of each day, not every bullet. Smaller items (for example Vite details, Convex, WebSockets, MCP depth, Semgrep usage) get a paragraph or less.
-- Runnable broken labs exist for Week 0 (static page) and Week 2 (auth server, Node built-ins only). Weeks 1, 3, 4, 5 and the Week 6 patch review are still text exercises: they need Postgres/Docker/a VPS/an LLM key and are not built yet.
+- Runnable labs with automated detectors exist for Week 0 (static page), Week 2 (auth server) and Week 6 (AI patch review); all use only Node built-ins and run via `npm run labs:check`. Weeks 1, 3, 4 and 5 labs are still text exercises: they need Postgres/Docker, a Next.js stack, a VPS or an LLM key and are not built yet.
 - Prices and hosting costs are intentionally not hard-coded; lessons tell learners to look up and date their own numbers.
 - Lesson code was reviewed for consistency but not run as a complete application.
 - The CI workflow is untested on GitHub runners.

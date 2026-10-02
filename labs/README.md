@@ -21,3 +21,11 @@ Bug 5 is checked as "no secret literal in the source file". The full lesson, rot
 `node labs/week-0/check.mjs broken` must report exactly 6 failing checks (it exits 0 when that holds) and `... fixed` must report 0. Likewise `labs/week-2/check.mjs` (5 bugs / 0). `npm run labs:check` runs all four. The checker is browser-based (Playwright), so `CHROMIUM_PATH` may need to be set.
 
 Bug 6 (handler attached twice) deliberately only shows from the **second** click, which is how it is usually discovered in real apps.
+
+## Week 6: AI patch review (`labs/week-6`)
+Three folders, same module:
+- `start/` — original code; one test fails (owners get 404).
+- `ai-patched/` — the "AI-suggested patch": every test in its own `tests.mjs` is green, but the permission matrix is broken. Find out how **by reading the diff** (`diff -ru start ai-patched`) before you run anything, including which test the agent edited.
+- `fixed/` — reference solution.
+
+`node labs/week-6/check.mjs <folder>` runs the folder's own tests and a hidden regression suite. For the lab: copy `start/` to your own folder, fix it by hand, then (and only then) ask an AI agent for its own fix and compare. Mentors: delete `ai-patched/tests.mjs` annotations (`// edited by the agent`) and `fixed/` before handing the repo to trainees.

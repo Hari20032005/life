@@ -9,7 +9,7 @@
     "lint": "tsc --noEmit",
     "content:check": "tsx scripts/content-check.ts",
     "check:browser": "node scripts/smoke.mjs && node scripts/list-lesson-urls.js && node scripts/check-diagrams.mjs && node scripts/a11y.mjs",
-    "labs:check": "node labs/week-0/check.mjs broken && node labs/week-0/check.mjs fixed && node --no-warnings labs/week-2/check.mjs broken && node --no-warnings labs/week-2/check.mjs fixed"
+    "labs:check": "node labs/week-0/check.mjs broken && node labs/week-0/check.mjs fixed && node --no-warnings labs/week-2/check.mjs broken && node --no-warnings labs/week-2/check.mjs fixed && node labs/week-6/check.mjs start && node labs/week-6/check.mjs ai-patched && node labs/week-6/check.mjs fixed"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",
