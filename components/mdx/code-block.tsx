@@ -11,7 +11,7 @@ export async function CodeBlock({ code, lang }: { code: string; lang: string }) 
     html = await codeToHtml(code, { lang: "text", themes: { light: "github-light", dark: "github-dark" }, defaultColor: false });
   }
   return (
-    <div className="group relative my-5">
+    <div className="group relative my-5 min-w-0 max-w-full">
       <span className="absolute left-3 top-0 -translate-y-1/2 rounded bg-surface-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-muted border border-border">{lang}</span>
       <CopyButton text={code} />
       <div dangerouslySetInnerHTML={{ __html: html }} />

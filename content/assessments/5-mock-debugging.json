@@ -1,0 +1,2 @@
+{"title":"Mock Interview: Debugging","durationMinutes":45,"rules":["Narrate hypotheses","No AI"],"parts":[
+ {"title":"Triage scenarios","points":100,"tasks":["API hangs after 10 requests (pool leak)","Prod-only CORS error (origin env var)","Page refetches in a loop (unstable effect dep)","Revenue report silently drops rows (missing FK / inner join)","Container restarts forever (missing env)"]}]}

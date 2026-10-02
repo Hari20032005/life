@@ -1,0 +1,4 @@
+{"title":"Mid-course Assessment (end of Week 3)","durationMinutes":240,"rules":["Open-book docs only; AI off for the first 2 hours, then afternoon rules apply","Explain-back on every line"],"parts":[
+ {"title":"Backend","points":30,"tasks":["Add a new endpoint with Zod validation and a 409 rule","Write happy and failure tests","Show the SQL it runs and its EXPLAIN plan"]},
+ {"title":"Auth & security","points":30,"tasks":["Demonstrate 401 vs 403 and an IDOR attempt that fails","Show cookie flags and CORS config","Explain why deleting a leaked secret file is not enough"]},
+ {"title":"Frontend","points":40,"tasks":["Booking form with shared Zod schema","Handle a 409 with a clear message","Dashboard role-based view; Playwright test passes"]}]}

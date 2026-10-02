@@ -30,8 +30,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   const toc = extractHeadings(body).filter((h) => h.depth === 2);
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1fr_16rem]">
-      <article>
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
+      <article className="min-w-0">
         <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted">
           <Link className="hover:text-fg" href={`/weeks/${n}`}>Week {n}</Link> / <Link className="hover:text-fg" href={`/weeks/${n}/day-${meta.day}`}>Day {meta.day}</Link> / {meta.module}
         </nav>

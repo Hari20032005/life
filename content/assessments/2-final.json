@@ -1,0 +1,4 @@
+{"title":"Final Assessment (Week 6)","durationMinutes":180,"rules":["Live, against your deployed capstone","Mentor chooses 3 random lines per PR for explain-back"],"parts":[
+ {"title":"Client outcome","points":30,"tasks":["Success criteria measured and shown","10-minute demo delivered"]},
+ {"title":"Engineering","points":35,"tasks":["CI green, migrations on deploy, rollback demonstrated","Evals pass rate and security checks recorded","Runbook restore drill shown"]},
+ {"title":"AI workflow","points":35,"tasks":["Show where AI was wrong and how it was caught","AI patch review bug explained","No secrets or client PII ever sent to a model"]}]}

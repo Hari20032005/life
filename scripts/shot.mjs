@@ -1,0 +1,12 @@
+import { chromium } from "playwright-core";
+const [,, url, out, w = "1280", dark = "0"] = process.argv;
+const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
+const p = await b.newPage({ viewport: { width: +w, height: 900 }, colorScheme: dark === "1" ? "dark" : "light" });
+const errs = [];
+p.on("console", (m) => m.type() === "error" && errs.push(m.text()));
+p.on("pageerror", (e) => errs.push(String(e)));
+await p.goto(url, { waitUntil: "networkidle" });
+await p.waitForTimeout(1500);
+await p.screenshot({ path: out, fullPage: false });
+console.log("console errors:", errs.length ? errs : "none");
+await b.close();

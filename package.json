@@ -41,6 +41,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "playwright-core": "^1.63.0",
     "typescript": "5.9"
   }
 }

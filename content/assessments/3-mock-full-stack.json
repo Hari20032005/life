@@ -1,0 +1,2 @@
+{"title":"Mock Interview: Full Stack","durationMinutes":60,"rules":["Think aloud","Ask clarifying questions first"],"parts":[
+ {"title":"Round","points":100,"tasks":["Explain the URL-to-page flow","Design REST endpoints for bookings with status codes","Explain a race condition on double booking and two ways to prevent it","Explain server vs client components in Next.js","Walk through how your auth cookie flows across subdomains"]}]}

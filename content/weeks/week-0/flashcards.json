@@ -1,0 +1,18 @@
+[
+ {"id":"w0f1","topic":"Web","front":"Order of steps when you type a URL?","back":"Parse URL → caches → DNS → TCP → TLS → HTTP request → server/CDN → response → parse HTML → fetch subresources → render."},
+ {"id":"w0f2","topic":"DNS","front":"A vs CNAME record?","back":"A: name → IPv4 address. CNAME: name → another name (alias)."},
+ {"id":"w0f3","topic":"HTTP","front":"401 vs 403?","back":"401: not authenticated (no/invalid login). 403: authenticated but not allowed."},
+ {"id":"w0f4","topic":"HTTP","front":"Status code families?","back":"2xx success, 3xx redirect, 4xx client error, 5xx server error."},
+ {"id":"w0f5","topic":"HTML","front":"Why semantic tags?","back":"Meaning for accessibility tools, SEO and maintainability: header, nav, main, section, article, footer."},
+ {"id":"w0f6","topic":"CSS","front":"Box model layers (inside → out)?","back":"content → padding → border → margin. Use box-sizing: border-box."},
+ {"id":"w0f7","topic":"CSS","front":"Flexbox vs Grid?","back":"Flexbox: one-dimensional (row or column). Grid: two-dimensional (rows and columns)."},
+ {"id":"w0f8","topic":"CSS","front":"Mobile-first media queries?","back":"Write base styles for small screens, then add @media (min-width: …) rules for larger ones."},
+ {"id":"w0f9","topic":"JS","front":"const vs let vs var?","back":"const: no reassignment. let: block-scoped reassignable. var: function-scoped, hoisted; avoid."},
+ {"id":"w0f10","topic":"JS","front":"Arrays are copied by…?","back":"Reference. b = a shares one array; use [...a] or a.slice() to copy."},
+ {"id":"w0f11","topic":"DOM","front":"textContent vs innerHTML?","back":"textContent inserts plain text (safe). innerHTML parses HTML (XSS risk with user input)."},
+ {"id":"w0f12","topic":"Events","front":"Event delegation?","back":"One listener on a parent uses bubbling and event.target.closest(selector) to handle child events."},
+ {"id":"w0f13","topic":"fetch","front":"Does fetch reject on 404?","back":"No. Check response.ok and throw yourself."},
+ {"id":"w0f14","topic":"async","front":"async/await is sugar for…?","back":"Promises. await pauses the async function (not the thread) until the promise settles."},
+ {"id":"w0f15","topic":"Storage","front":"localStorage stores…?","back":"Strings only. JSON.stringify to save, JSON.parse (in try/catch) to read."},
+ {"id":"w0f16","topic":"Debug","front":"Report format for every fix?","back":"symptom → cause → fix → how verified."}
+]

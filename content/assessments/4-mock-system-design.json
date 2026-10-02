@@ -1,0 +1,2 @@
+{"title":"Mock Interview: System Design","durationMinutes":60,"rules":["Draw first, then talk","State assumptions and numbers"],"parts":[
+ {"title":"Design a booking platform for 1,000 salons","points":100,"tasks":["Requirements and non-goals","Data model and indexes","Concurrency: how double bookings are prevented","Scaling: stateless API, cache, queue for reminders","Single points of failure, backups and monitoring","Monthly cost estimate"]}]}

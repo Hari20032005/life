@@ -1,0 +1,2 @@
+{"title":"Mock Interview: AI Engineering","durationMinutes":60,"rules":["Discuss trade-offs and failure modes"],"parts":[
+ {"title":"Receptionist bot review","points":100,"tasks":["Design RAG: chunking, embeddings, hybrid search, citations","Explain why model text must never trigger a booking directly","Describe 3 prompt-injection defenses","Design an eval set and CI gate","Estimate and cap cost per conversation"]}]}

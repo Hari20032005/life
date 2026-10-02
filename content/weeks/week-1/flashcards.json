@@ -1,0 +1,12 @@
+[
+{"id":"w1f1","topic":"HTTP","front":"PUT vs PATCH?","back":"PUT replaces the whole resource; PATCH changes only the fields sent."},
+{"id":"w1f2","topic":"HTTP","front":"Idempotent methods?","back":"GET, PUT, DELETE (same result if repeated). POST is not idempotent by default."},
+{"id":"w1f3","topic":"SQL","front":"ON DELETE CASCADE vs RESTRICT?","back":"CASCADE deletes children with the parent; RESTRICT blocks deleting a parent that has children."},
+{"id":"w1f4","topic":"SQL","front":"Why partial unique index on bookings?","back":"UNIQUE (staff_id, starts_at) WHERE status <> 'cancelled' blocks double bookings but lets cancelled slots be re-booked."},
+{"id":"w1f5","topic":"SQL","front":"Overlap test for [s1,e1) and [s2,e2)?","back":"s1 < e2 AND e1 > s2"},
+{"id":"w1f6","topic":"Postgres","front":"Why SELECT … FOR UPDATE?","back":"Locks rows so concurrent transactions wait, making check-then-insert safe."},
+{"id":"w1f7","topic":"Express","front":"Why does middleware order matter?","back":"Requests flow through middleware in registration order; body parsing before routes, 404 and error handlers last."},
+{"id":"w1f8","topic":"Zod","front":"What does Zod give you?","back":"Runtime validation + inferred TypeScript types from one schema."},
+{"id":"w1f9","topic":"Testing","front":"What makes a good test?","back":"Fails when behaviour breaks, passes when it doesn't, tests one thing, independent, readable."},
+{"id":"w1f10","topic":"AI","front":"Explain-back rule?","back":"You must be able to explain every changed line; mentor points at 3 random lines."}
+]

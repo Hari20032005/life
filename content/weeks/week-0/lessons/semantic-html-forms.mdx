@@ -1,0 +1,166 @@
+---
+title: "Semantic HTML, accessibility and forms"
+day: 2
+order: 1
+module: "Module 1 · Structure"
+minutes: 35
+summary: "Use the right element for the job, make pages usable with a keyboard and screen reader, and build forms the browser validates for you."
+tags: ["html", "accessibility", "forms"]
+---
+
+## What
+
+**HTML** describes the *meaning and structure* of content. **Semantic** HTML uses elements whose names say what the content is, not how it looks.
+
+```html
+<body>
+  <header><h1>Asha Rao</h1><nav aria-label="Main"><a href="#projects">Projects</a></nav></header>
+  <main>
+    <section id="projects"><h2>Projects</h2>
+      <article><h3>Weather app</h3><p>Shows a 5-day forecast.</p></article>
+    </section>
+  </main>
+  <footer><small>© 2026 Asha</small></footer>
+</body>
+```
+
+| Element | Use for |
+|---------|---------|
+| `header`, `footer` | Intro / closing content of a page or section |
+| `nav` | Major navigation links |
+| `main` | The unique content of the page (one per page) |
+| `section` | A themed group, usually with a heading |
+| `article` | Self-contained content (card, post) |
+| `button` | Does something. `a` goes somewhere. |
+
+## Why
+
+1. **Accessibility:** screen readers expose landmarks (`main`, `nav`) and headings so users can jump around.
+2. **Free behavior:** `<button>` is focusable and activates on Enter and Space; a `<div onclick>` is neither.
+3. **SEO and maintainability:** machines understand your page; teammates do too.
+
+## How
+
+### Headings
+One `h1`; then `h2`, `h3` in logical order with no skipped levels. Headings are an outline, not font sizes (style them with CSS).
+
+### Images
+```html
+<img src="images/me.jpg" alt="Asha smiling at a laptop in a café" width="400" height="300">
+```
+`alt` describes the image's *purpose*. Decorative images get `alt=""`. Always set `width`/`height` to avoid layout shift.
+
+### Forms
+
+```html
+<form action="#" method="post">
+  <div>
+    <label for="name">Name</label>
+    <input id="name" name="name" type="text" autocomplete="name" required minlength="2">
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" required>
+  </div>
+  <div>
+    <label for="topic">Topic</label>
+    <select id="topic" name="topic"><option>Hiring</option><option>Question</option></select>
+  </div>
+  <div>
+    <label for="msg">Message</label>
+    <textarea id="msg" name="message" rows="5" maxlength="500" required></textarea>
+  </div>
+  <button type="submit">Send</button>
+</form>
+```
+
+- `label for` + `id` links text to input: clicking the label focuses the field and screen readers announce it.
+- Input `type` (`email`, `number`, `date`, `tel`, `url`) gives the right mobile keyboard and built-in validation.
+- `required`, `minlength`, `pattern` make the browser block bad submits (Day 2 acceptance). On Day 7 you will take over validation in JS with `novalidate` and `checkValidity()`.
+- `name` is what is sent to the server. No `name` → the field is not submitted.
+
+### Keyboard navigation
+`Tab` / `Shift+Tab` move focus, `Enter` submits, `Space` toggles checkboxes and buttons, arrow keys move within radio groups. Tab order follows the DOM order, so write the DOM in a logical order. Never remove the focus outline without replacing it.
+
+<Playground title="What the browser knows about a form" code={`
+const el = document.createElement("input");
+el.type = "email"; el.required = true;
+el.value = "not-an-email";
+console.log("valid?", el.checkValidity());
+console.log("message:", el.validationMessage);
+el.value = "asha@example.com";
+console.log("valid now?", el.checkValidity());
+`} />
+
+## When
+
+Always. Choose elements by meaning first; reach for `div`/`span` only when nothing semantic fits. Use ARIA (`aria-label`, `aria-live`) only to fill gaps that native HTML cannot.
+
+## Where
+
+Every page you will ever build: marketing pages (Week 0), the booking form (Week 3), the chat widget (Week 5).
+
+## Levels of understanding
+
+<Levels>
+<Level id="beginner">
+
+HTML is the skeleton of a page. Pick tags that describe what things are: a heading is a heading, a list is a list, a button is a button. Give every picture a short description and every form box a visible label.
+
+</Level>
+<Level id="intermediate">
+
+The browser builds an **accessibility tree** from your HTML. Landmarks and headings become navigation shortcuts; labels become accessible names; roles come from elements. Constraint validation (`required`, `type`, `pattern`) runs before the submit event and blocks it with native messages.
+
+</Level>
+<Level id="advanced">
+
+Accessible name computation prefers `aria-labelledby` → `aria-label` → native label → content → `title`. Use `aria-describedby` for hints and errors, `aria-invalid` on bad fields and `role="alert"`/`aria-live` for dynamic messages. `fieldset`/`legend` group radios. `autocomplete` tokens improve autofill and WCAG 1.3.5 compliance.
+
+</Level>
+<Level id="industry">
+
+Companies get sued over inaccessible sites. Teams run automated checks (axe, Lighthouse a11y 90+) in CI and manual keyboard/screen-reader passes. Design systems ship pre-built accessible form components. Validation always happens on the **server** too, because client checks can be bypassed.
+
+</Level>
+</Levels>
+
+## Common mistakes
+
+<Callout kind="mistake">
+
+- Using placeholders as labels.
+- `<div class="button">` instead of `<button>`.
+- Skipping heading levels or using multiple `h1`s for styling.
+- Missing or useless `alt` ("image1.png", "photo").
+- Links that say "click here".
+- Forgetting `name` on inputs.
+- Assuming client validation is security.
+
+</Callout>
+
+## Industry usage
+
+<Callout kind="industry">Semantic structure and labelled forms are a legal and business requirement in many markets (WCAG 2.2 AA). Booking forms in Week 3 will reuse exactly these patterns with React Hook Form.</Callout>
+
+## Exercises
+
+<Challenge kind="exercise" title="Keyboard-only run" answer={<p>If you cannot reach a control with Tab, it is not focusable (probably a div). If you cannot see where you are, a focus style is missing. Fix both before moving on.</p>}>
+
+Build the contact form, unplug your mouse mentally, and complete and submit it using only the keyboard. Note every obstacle.
+
+</Challenge>
+
+<Challenge kind="debug" title="Why doesn't the form send my email?" answer={<p>The input has no <code>name</code> attribute, so it is not part of the submitted form data. Add <code>name="email"</code>.</p>}>
+
+`<input id="email" type="email" required>` is in a form but the server never receives it.
+
+</Challenge>
+
+## Interview questions
+
+<Challenge kind="interview" title="div vs button" answer={<p>A <code>button</code> is focusable, keyboard-activatable, announced as a button, and works with forms. A div needs tabindex, key handlers and a role to imitate it, and usually does so badly.</p>}>
+
+"Why use a button instead of a clickable div?"
+
+</Challenge>

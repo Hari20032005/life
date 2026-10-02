@@ -1,0 +1,54 @@
+## Week 0 cheat sheet
+
+### Request/response
+| Code | Meaning |
+|------|---------|
+| 200 | OK |
+| 201 | Created |
+| 301/302 | Redirect |
+| 400 | Bad request |
+| 401 | Not logged in |
+| 403 | Not allowed |
+| 404 | Nothing at this path |
+| 500 | Server bug |
+
+### Terminal
+```bash
+pwd            # where am I
+ls -la         # list files
+cd folder      # enter
+cd ..          # up one
+mkdir name     # new folder
+```
+
+### Git
+```bash
+git init
+git add .
+git commit -m "Add profile page"
+git branch -M main
+git remote add origin <url>
+git push -u origin main
+```
+
+### Fetch with all three states
+```js
+async function load(url) {
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.json();
+  } catch (e) {
+    showError(e.message); // with Retry
+  }
+}
+```
+
+### Delegation
+```js
+list.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-tag]");
+  if (!btn) return;
+  filter(btn.dataset.tag);
+});
+```

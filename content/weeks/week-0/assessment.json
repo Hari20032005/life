@@ -1,0 +1,12 @@
+{
+ "title": "Week 0 Assessment: Portfolio rubric self-check",
+ "durationMinutes": 120,
+ "rules": ["No AI. Mentor present.", "Tick a task only when you can demonstrate it live.", "Be ready for explain-back on any line."],
+ "parts": [
+  {"title":"Semantics + accessibility","points":20,"tasks":["One h1 with logical heading order","Every image has meaningful alt; every input has a label","Keyboard-only form completion works"]},
+  {"title":"Responsive layout + CSS states","points":20,"tasks":["No horizontal scroll from 360px to 1440px","Hover, active and visible focus states are distinct","No inline styles"]},
+  {"title":"JavaScript + API widget","points":25,"tasks":["Loading, error (with Retry) and empty states all work","Non-2xx treated as error; offline shows error","Corrupted localStorage falls back to defaults","Cards rendered from an array with one delegated listener"]},
+  {"title":"Validator + zero console errors","points":15,"tasks":["Passes validator.w3.org","Zero console and network errors"]},
+  {"title":"README + GitHub Pages","points":20,"tasks":["Deployed on GitHub Pages","README has screenshots and a How I verified this section","Can explain the URL-to-page flow in 2 minutes"]}
+ ]
+}
