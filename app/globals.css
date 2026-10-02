@@ -60,6 +60,7 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -
 .prose-lesson ul { list-style: disc; padding-left: 1.4rem; margin: .85rem 0; }
 .prose-lesson ol { list-style: decimal; padding-left: 1.4rem; margin: .85rem 0; }
 .prose-lesson li { margin: .3rem 0; }
+.prose-lesson ul.contains-task-list { list-style: none; padding-left: .25rem; }
 .prose-lesson a { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
 .prose-lesson code:not(pre code) { background: var(--surface-2); border: 1px solid var(--border); padding: .08rem .35rem; border-radius: 5px; font-size: .88em; font-family: var(--font-mono); }
 .prose-lesson blockquote { border-left: 3px solid var(--brand); padding-left: 1rem; color: var(--muted); margin: 1rem 0; }

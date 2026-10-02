@@ -25,6 +25,9 @@ const components = {
     const lang = /language-(\w+)/.exec(child?.props?.className ?? "")?.[1] ?? "text";
     return <CodeBlock code={textOf(child?.props?.children).replace(/\n$/, "")} lang={lang} />;
   },
+  // GFM task-list checkboxes are static and unlabeled; render them as decorative boxes (the item text carries the meaning).
+  input: (props: { type?: string; checked?: boolean }) =>
+    props.type === "checkbox" ? <span aria-hidden="true" className="mr-2 inline-block">{props.checked ? "☑" : "☐"}</span> : null,
   Mermaid, Playground, Levels, Level, Callout, Frame, Challenge,
 };
 

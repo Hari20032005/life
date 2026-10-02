@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm }
       - run: npm ci
+      - run: npm run ci:lint         # static check of this workflow (scripts and files it references exist)
       - run: npm run content:check   # schemas, required lesson sections, MDX compiles
       - run: npm run lint            # tsc --noEmit
       - run: npm run build

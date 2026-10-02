@@ -34,7 +34,7 @@ export const verifyPassword = (hash: string, plain: string) => argon2.verify(has
 
 ### Sessions vs JWT
 
-| | Server session | JWT (stateless token) |
+| Aspect | Server session | JWT (stateless token) |
 |--|----------------|-----------------------|
 | What the client holds | Random session id | Signed token containing claims (`sub`, `role`, `exp`) |
 | Where state lives | Server store (DB/Redis) | In the token |

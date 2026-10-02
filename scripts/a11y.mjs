@@ -4,6 +4,8 @@ const base = process.argv[2] ?? "http://localhost:3200";
 const axeSrc = fs.readFileSync("node_modules/axe-core/axe.min.js", "utf8");
 const urls = ["/", "/program", "/roadmap", "/project", "/assessments", "/flashcards", "/interview", "/prompts", "/progress", "/search",
   "/weeks/0", "/weeks/0/day-1", "/weeks/0/day-1/url-to-page", "/weeks/0/quiz", "/weeks/3/day-4/frontend-auth", "/weeks/5/day-4/tool-calling", "/weeks/6/assessment"];
+// Also audit every lesson page when scripts/list-lesson-urls.js has been run (npm run check:browser does this).
+try { urls.push(...JSON.parse(fs.readFileSync("/tmp/urls.json", "utf8")).filter((u) => u.startsWith("/weeks/") && !urls.includes(u))); } catch { /* optional */ }
 const b = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
 let total = 0;
 for (const scheme of ["light", "dark"]) {
