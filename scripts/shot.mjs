@@ -1,6 +1,6 @@
 import { chromium } from "playwright-core";
 const [,, url, out, w = "1280", dark = "0"] = process.argv;
-const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
+const b = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
 const p = await b.newPage({ viewport: { width: +w, height: 900 }, colorScheme: dark === "1" ? "dark" : "light" });
 const errs = [];
 p.on("console", (m) => m.type() === "error" && errs.push(m.text()));

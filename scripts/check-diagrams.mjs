@@ -1,8 +1,8 @@
 import { chromium } from "playwright-core";
 import fs from "node:fs";
-const base = process.argv[2] ?? "http://localhost:3130";
+const base = process.argv[2] ?? "http://localhost:3200";
 const urls = JSON.parse(fs.readFileSync("/tmp/urls.json", "utf8"));
-const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
+const b = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
 const p = await b.newPage({ viewport: { width: 1280, height: 900 } });
 let bad = 0, total = 0;
 for (const u of urls) {
@@ -21,7 +21,7 @@ await b.close();
 
 // /project: diagrams live inside tabs that are only mounted when selected
 {
-  const b2 = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
+  const b2 = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
   const pg = await b2.newPage({ viewport: { width: 1280, height: 900 } });
   await pg.goto(base + "/project", { waitUntil: "networkidle" });
   const tabs = await pg.getByRole("tab").all();

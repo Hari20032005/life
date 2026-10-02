@@ -25,9 +25,9 @@ export default function AssessmentsPage() {
       </section>
       <section>
         <h2 className="mb-3 text-xl font-bold">Program assessments</h2>
-        <Tabs defaultValue={program[0]?.title}>
-          <TabsList>{program.map((a) => <TabsTrigger key={a.title} value={a.title}>{a.title}</TabsTrigger>)}</TabsList>
-          {program.map((a, i) => <TabsContent key={a.title} value={a.title}><AssessmentView a={a} idPrefix={`assess-prog-${i}`} /></TabsContent>)}
+        <Tabs defaultValue="p0">
+          <TabsList>{program.map((a, i) => <TabsTrigger key={a.title} value={`p${i}`}>{a.title}</TabsTrigger>)}</TabsList>
+          {program.map((a, i) => <TabsContent key={a.title} value={`p${i}`}><AssessmentView a={a} idPrefix={`assess-prog-${i}`} /></TabsContent>)}
         </Tabs>
       </section>
     </div>

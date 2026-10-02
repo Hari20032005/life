@@ -1,0 +1,32 @@
+name: ci
+on:
+  pull_request:
+  push: { branches: [main] }
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run content:check   # schemas, required lesson sections, MDX compiles
+      - run: npm run lint            # tsc --noEmit
+      - run: npm run build
+      - name: Install browser for checks
+        run: npx playwright-core install --with-deps chromium
+      - name: Start production server
+        run: |
+          npx next start -p 3200 &
+          npx wait-on http://localhost:3200 --timeout 60000
+      - name: Browser checks (smoke, diagrams, accessibility)
+        env:
+          CHROMIUM_PATH: ""
+        run: |
+          export CHROMIUM_PATH="$(node -e "console.log(require('playwright-core').chromium.executablePath())")"
+          node scripts/smoke.mjs
+          node -e "$(cat scripts/list-lesson-urls.js)"
+          node scripts/check-diagrams.mjs http://localhost:3200
+          node scripts/a11y.mjs http://localhost:3200

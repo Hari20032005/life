@@ -1,0 +1,166 @@
+---
+title: "Integration tests, coverage and CI with GitHub Actions"
+day: 5
+order: 1
+module: "Module 5 · Automated safety net"
+minutes: 55
+summary: "Test auth flows against a real Postgres, measure coverage where it matters, run everything in GitHub Actions with a pgvector service container, and make failing PRs unmergeable."
+tags: ["testing", "ci", "github-actions", "coverage", "branch-protection"]
+---
+
+## What
+
+An **integration test** exercises several real parts together: HTTP route → validation → service → database. For auth, that is the only kind of test that proves the security rules actually hold.
+
+```mermaid
+flowchart LR
+    PR[Pull request] --> GH["GitHub Actions runner"]
+    subgraph GH
+      PG[("Service container<br/>pgvector/pgvector:pg17")] 
+      J1["checkout · setup-node · npm ci"] --> J2["lint · typecheck"] --> J3["migrate test DB"] --> J4["vitest --coverage"]
+      J4 --> PG
+    end
+    GH -->|red| BLOCK["Merge blocked by branch protection"]
+    GH -->|green| OK["Merge allowed"]
+```
+
+### Test fixtures for auth
+
+```ts
+// tests/helpers.ts
+export async function makeUser(role: "owner" | "staff" | "customer", email = `${role}-${crypto.randomUUID()}@test.dev`) {
+  const password = "CorrectHorse9!";
+  await db.insert(users).values({ email, passwordHash: await hashPassword(password), role });
+  return { email, password };
+}
+export async function loginAs(role: Role) {
+  const u = await makeUser(role);
+  const agent = request.agent(app);                    // keeps the session cookie between calls
+  await agent.post("/login").send(u).expect(200);
+  return agent;
+}
+```
+
+Core cases: signup creates a `customer` even if `role=owner` is sent; duplicate email differing by case → 409; wrong password and unknown email return identical 401 bodies; expired token → 401; logout clears the cookie; each role against each route (the permission matrix); customer A cannot read/cancel customer B's booking; Origin `https://evil.example` → 403.
+
+### Coverage
+
+`vitest run --coverage` reports which lines tests execute. Use it as a **flashlight, not a goal**: require 80%+ on auth and booking logic (configure thresholds for those folders) and read the uncovered lines, because 100% coverage with weak assertions proves nothing.
+
+### The workflow
+
+```yaml
+name: ci
+on:
+  pull_request:
+  push: { branches: [main] }
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17          # same image as local development
+        env: { POSTGRES_PASSWORD: postgres, POSTGRES_DB: booking_test }
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/booking_test
+      JWT_SECRET: test-secret-only-for-ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run db:migrate
+      - run: npm test -- --coverage
+```
+
+Check current major versions of the actions when you write this; pin them deliberately. Test secrets are throwaway values; **real** secrets never appear in CI logs.
+
+### Branch protection
+Repo → Settings → Branches → rule for `main`: *Require a pull request*, *Require status checks to pass* (select the `test` job), and turn on **"Do not allow bypassing the above settings"**. Use a public repository (private repos need a paid plan for this). Prove it: open a PR with a failing test and confirm the merge button is disabled.
+
+### Letting an AI refactor error handling
+Ask the agent to move all routes to one error format. Then: read the whole diff, run the tests, check no status code changed unintentionally, and **keep only verified changes**. If the agent edited tests, justify each edit.
+
+## Why
+
+Security rules are only real if a test fails when someone breaks them. CI makes that check automatic, and branch protection makes it mandatory, so quality does not depend on anyone's memory or mood.
+
+## How
+
+1. Write the auth/role/ownership tests above against a real test database (reset per test).
+2. Add the workflow; make it pass on a clean runner (no local state assumptions).
+3. Set coverage thresholds for `src/auth` and `src/services/bookings`.
+4. Enable branch protection; verify with a deliberately failing PR.
+5. Do the AI refactor on a branch; verify; merge only what you can explain.
+
+## When
+
+Run CI on every PR and push to main. Keep the pipeline fast (minutes), because slow CI gets bypassed.
+
+## Where
+
+`.github/workflows/ci.yml`, `tests/`, repository settings.
+
+## Levels of understanding
+
+<Levels>
+<Level id="beginner">
+
+A robot runs all your tests every time you propose a change. If any fail, GitHub refuses to merge. That protects the project from mistakes, including yours and the AI's.
+
+</Level>
+<Level id="intermediate">
+
+Use a real Postgres service container with the same image as local, fixtures and agents for logged-in requests, a permission-matrix test, coverage thresholds on critical folders, and required status checks with no bypass.
+
+</Level>
+<Level id="advanced">
+
+Parallelise or shard slow suites, cache dependencies, use per-worker databases or transaction rollbacks for speed, make tests hermetic (frozen clock, no network), and treat flaky tests as bugs to fix, never to skip.
+
+</Level>
+<Level id="industry">
+
+CI also runs security scans, builds images, and gates deploys; protected environments require approvals; required checks and CODEOWNERS enforce review on sensitive paths; CI duration and flake rate are tracked metrics.
+
+</Level>
+</Levels>
+
+## Common mistakes
+
+<Callout kind="mistake">
+
+- Mocking the database in auth tests, so constraints and SQL are never exercised.
+- Different Postgres image in CI than locally.
+- Coverage chasing without meaningful assertions.
+- Required checks not selected, so the rule blocks nothing.
+- Allowing admins to bypass protection.
+- Real secrets in workflow files.
+- Skipping or deleting a flaky test to get green.
+
+</Callout>
+
+## Industry usage
+
+<Callout kind="industry">"Is CI green on main, and can anyone merge red?" is a routine due-diligence question. Your answer should be yes and no, with a screenshot of the branch rule.</Callout>
+
+## Exercises
+
+<Challenge kind="exercise" title="Blocked PR" answer={<p>Open a PR that changes an assertion so one test fails. Evidence: the failing check on the PR, the disabled merge button, and the repository rule showing the required status check and &quot;Do not allow bypassing&quot;.</p>}>
+
+Demonstrate the Day 5 acceptance criterion "a PR with a failing test is blocked".
+
+</Challenge>
+
+## Interview questions
+
+<Challenge kind="interview" title="Why a real database in CI?" answer={<p>Constraints, SQL, transactions and locking only behave truthfully on the real engine. Mocks hide integration bugs that become production incidents; a service container makes real-database tests cheap.</p>}>
+
+"Why use a Postgres service container instead of mocking the data layer?"
+
+</Challenge>

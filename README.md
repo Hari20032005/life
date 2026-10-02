@@ -27,11 +27,13 @@ MDX components: `<Levels>/<Level id>`, `<Callout kind>`, `<Challenge kind answer
 ## Verification
 
 ```bash
-npm run content:check                      # schemas + required lesson sections + every lesson compiles as MDX
-npm run build && npx next start -p 3131 &  # then:
-node scripts/smoke.mjs                     # browser: diagrams, playground, progress, quiz, flashcards, search, 360px overflow
-node scripts/check-diagrams.mjs http://localhost:3131   # every Mermaid diagram on every lesson + /project renders
+npm run content:check   # schemas + required lesson sections + every lesson compiles as MDX
+npm run lint            # tsc --noEmit
+npm run build && npx next start -p 3200 &
+npm run check:browser   # smoke test, every Mermaid diagram renders, axe accessibility (light + dark)
 ```
+The browser scripts default to `/opt/pw-browsers/chromium`; override with `CHROMIUM_PATH`, and pass the server URL as the first argument (default ports are set per script).
+`.github/workflows/ci.yml` runs all of this on pull requests. **The workflow has not yet run on GitHub**, so expect to fix small issues on first use.
 
 ## Status
 
@@ -41,13 +43,15 @@ node scripts/check-diagrams.mjs http://localhost:3131   # every Mermaid diagram 
 | Official spec for Weeks 0-6 (every day: tasks, acceptance criteria, broken labs, rubrics) | Done |
 | Booking-system evolution W1→W6 (diagrams, folders, schema, API, flows) | Done |
 | Weekly assessments (rubric-mapped), mid-course, final, 4 mock interviews, AI prompts per week | Done |
-| Cheat sheet + revision notes, quiz, flashcards, interview bank, labs for Weeks 0-6 | Done |
-| Lessons: Week 0 (8), Week 1 (7), Week 2 (4), Week 3 (5), Week 4 (5), Week 5 (5), Week 6 (5) = 39 | Core topics covered; see gaps |
+| Cheat sheet, revision notes, quiz, flashcards, interview bank, labs for Weeks 0-6 | Done |
+| Lessons (46): W0 9, W1 8, W2 6, W3 6, W4 6, W5 6, W6 5, including a Sunday project guide for Weeks 0-5 | Done for the main topic of each day |
+| Accessibility: axe-core, 17 pages x light/dark, no violations; 59 Mermaid diagrams render | Verified locally |
 
 ### Known gaps (honest list)
 
-- Lessons are written for the main topic of most days, not every bullet of every day. Not yet written as full lessons: Week 0 Day 7 project guide; Week 1 Day 6/7 and Week 2 Day 5-7 guides (spec, labs and rubrics exist); Week 3 Day 6-7; Week 4 Day 6-7; Week 5 Day 6-7.
-- Week 0-6 debug labs are text exercises with hidden solutions, not runnable broken repos. The provided "broken systems" the program refers to still need to be built as separate repos.
-- Prices and hosting costs are intentionally not hard-coded: lessons tell learners to look up and date their own numbers.
-- Code in lessons has been reviewed for consistency but not executed as a complete application (the booking API/app itself is what trainees build).
-- Accessibility has been checked structurally (landmarks, labels, focus styles, no 360px overflow); a full Lighthouse/axe audit and CI workflow are not set up yet.
+- Saturday debug-lab days have the method lesson (Week 0, Week 6) and hidden-solution exercises, but no per-week lesson; Week 3-5 Day 6 topics (React DevTools/hydration, docker/Caddy logs, reading LLM traces) are only in the labs.
+- Lessons cover the main topic of each day, not every bullet. Smaller items (for example Vite details, Convex, WebSockets, MCP depth, Semgrep usage) get a paragraph or less.
+- Labs are text exercises, not runnable broken repositories. The "provided broken systems" in the program still need to be built.
+- Prices and hosting costs are intentionally not hard-coded; lessons tell learners to look up and date their own numbers.
+- Lesson code was reviewed for consistency but not run as a complete application.
+- The CI workflow is untested on GitHub runners.

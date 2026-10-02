@@ -13,7 +13,11 @@ export function Mermaid({ chart, caption }: { chart: string; caption?: string })
     (async () => {
       try {
         const mermaid = (await import("mermaid")).default;
-        mermaid.initialize({ startOnLoad: false, securityLevel: "strict", theme: resolvedTheme === "dark" ? "dark" : "neutral", fontFamily: "inherit" });
+        const dark = resolvedTheme === "dark";
+        mermaid.initialize({
+          startOnLoad: false, securityLevel: "strict", theme: dark ? "dark" : "neutral", fontFamily: "inherit",
+          themeVariables: dark ? { edgeLabelBackground: "#1d2027", lineColor: "#b4b7c0", textColor: "#ececea", primaryTextColor: "#ececea" } : {},
+        });
         const { svg } = await mermaid.render(`m${id}`, chart.trim());
         if (!cancelled) { setSvg(svg); setError(null); }
       } catch (e) {

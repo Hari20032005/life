@@ -1,6 +1,6 @@
 import { chromium } from "playwright-core";
-const base = "http://localhost:3130";
-const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
+const base = process.argv[2] ?? "http://localhost:3200";
+const b = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
 const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } });
 const p = await ctx.newPage();
 const errs = [];

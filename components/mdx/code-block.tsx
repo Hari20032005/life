@@ -6,9 +6,9 @@ export async function CodeBlock({ code, lang }: { code: string; lang: string }) 
   if (lang === "mermaid") return <Mermaid chart={code} />;
   let html: string;
   try {
-    html = await codeToHtml(code, { lang, themes: { light: "github-light", dark: "github-dark" }, defaultColor: false });
+    html = await codeToHtml(code, { lang, themes: { light: "github-light-high-contrast", dark: "github-dark-high-contrast" }, defaultColor: false });
   } catch {
-    html = await codeToHtml(code, { lang: "text", themes: { light: "github-light", dark: "github-dark" }, defaultColor: false });
+    html = await codeToHtml(code, { lang: "text", themes: { light: "github-light-high-contrast", dark: "github-dark-high-contrast" }, defaultColor: false });
   }
   return (
     <div className="group relative my-5 min-w-0 max-w-full">

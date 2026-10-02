@@ -29,7 +29,7 @@ export function Levels({ children }: { children: ReactNode }) {
           const { label, Icon } = META[l.props.id];
           return (
             <section key={l.props.id} className="rounded-xl border border-border bg-surface p-5">
-              <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand"><Icon size={16} />{label}</h4>
+              <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand"><Icon size={16} />{label}</h3>
               <div>{l.props.children}</div>
             </section>
           );
