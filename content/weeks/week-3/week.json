@@ -14,8 +14,16 @@
   "projectStage": "Booking Web App v1 — monorepo (api/, web/, packages/shared). Customer booking flow + owner dashboard on Next.js.",
   "days": [
     {
-      "day": 1, "weekday": "Mon", "title": "React + Next.js Basics", "aiMode": "mixed",
-      "learn": ["Components, props, JSX, children, lists and keys", "Vite vs Next.js and when each is used", "npm workspaces", "Next.js App Router, layouts, server vs client components, dynamic routes, 404 pages"],
+      "day": 1,
+      "weekday": "Mon",
+      "title": "React + Next.js Basics",
+      "aiMode": "mixed",
+      "learn": [
+        "Components, props, JSX, children, lists and keys",
+        "Vite vs Next.js and when each is used",
+        "npm workspaces",
+        "Next.js App Router, layouts, server vs client components, dynamic routes, 404 pages"
+      ],
       "tasks": [
         "Scaffold Next.js with TypeScript. Put api/ and web/ in one repo with npm workspaces and a packages/shared folder for the Zod schemas. Update the CI workflow paths in the same PR so CI stays green.",
         "Build pages: /, /services, /services/[id], /book, /bookings/[id], /login, /signup, /dashboard.",
@@ -32,8 +40,16 @@
       ]
     },
     {
-      "day": 2, "weekday": "Tue", "title": "State, Forms + Validation", "aiMode": "mixed",
-      "learn": ["useState, controlled inputs, immutable state updates", "React Hook Form", "Sharing Zod schemas between frontend and backend", "Conditional rendering, loading and disabled button states"],
+      "day": 2,
+      "weekday": "Tue",
+      "title": "State, Forms + Validation",
+      "aiMode": "mixed",
+      "learn": [
+        "useState, controlled inputs, immutable state updates",
+        "React Hook Form",
+        "Sharing Zod schemas between frontend and backend",
+        "Conditional rendering, loading and disabled button states"
+      ],
       "tasks": [
         "Build the booking form: service, date, time slot, contact details.",
         "Show validation errors next to each field.",
@@ -47,7 +63,10 @@
       ]
     },
     {
-      "day": 3, "weekday": "Wed", "title": "Data Fetching + Server State", "aiMode": "mixed",
+      "day": 3,
+      "weekday": "Wed",
+      "title": "Data Fetching + Server State",
+      "aiMode": "mixed",
       "learn": [
         "fetch with credentials: \"include\" and CORS credentials for cookies",
         "useEffect dependency arrays and cleanup, and why to avoid useEffect for fetching",
@@ -67,8 +86,16 @@
       ]
     },
     {
-      "day": 4, "weekday": "Thu", "title": "Auth on the Frontend", "aiMode": "mixed",
-      "learn": ["Global state with Context API or Zustand", "Cookie-based login from the browser, Google sign-in button", "Protected routes with proxy.ts (middleware.ts before Next.js 16)", "Role-based UI, logout"],
+      "day": 4,
+      "weekday": "Thu",
+      "title": "Auth on the Frontend",
+      "aiMode": "mixed",
+      "learn": [
+        "Global state with Context API or Zustand",
+        "Cookie-based login from the browser, Google sign-in button",
+        "Protected routes with proxy.ts (middleware.ts before Next.js 16)",
+        "Role-based UI, logout"
+      ],
       "tasks": [
         "Connect login, signup and Google sign-in to the backend, and move the Google account-linking confirm form into Next.js.",
         "Keep the logged-in user in global state (Context or Zustand).",
@@ -83,8 +110,14 @@
       ]
     },
     {
-      "day": 5, "weekday": "Fri", "title": "UX Polish, Accessibility + E2E Tests", "aiMode": "mixed",
-      "learn": ["Responsive layouts, accessible components, time zones in the UI", "React Testing Library, Playwright E2E tests"],
+      "day": 5,
+      "weekday": "Fri",
+      "title": "UX Polish, Accessibility + E2E Tests",
+      "aiMode": "mixed",
+      "learn": [
+        "Responsive layouts, accessible components, time zones in the UI",
+        "React Testing Library, Playwright E2E tests"
+      ],
       "tasks": [
         "Owner dashboard actions: cancel and mark done from today's bookings. Add PATCH /bookings/:id/status (owner only) and a migration adding the 'completed' status.",
         "Add tabs for Upcoming / Completed / Cancelled on the dashboard.",
@@ -100,8 +133,15 @@
       ]
     },
     {
-      "day": 6, "weekday": "Sat", "title": "Debug Lab (no AI)", "aiMode": "no-ai",
-      "learn": ["React DevTools", "The Network tab against a real backend", "Reading hydration errors"],
+      "day": 6,
+      "weekday": "Sat",
+      "title": "Debug Lab (no AI)",
+      "aiMode": "no-ai",
+      "learn": [
+        "React DevTools",
+        "The Network tab against a real backend",
+        "Reading hydration errors"
+      ],
       "brokenLab": [
         "A useEffect with an unstable dependency that refetches on every render (check with next build and next start, since Strict Mode runs effects twice in dev)",
         "Index keys that make the wrong booking update on cancel",
@@ -109,7 +149,10 @@
         "A form that doesn't validate",
         "A hydration mismatch from a date rendered in the server's time zone"
       ],
-      "tasks": ["Fix all five issues in the provided booking frontend, with a test for each."],
+      "tasks": [
+        "A runnable broken booking UI is in the repository at labs/week-3/broken (React, server-rendered; see labs/README.md; needs Chromium for the checker). Debug with React DevTools and the Network tab, no AI. Check with: node labs/week-3/check.mjs broken",
+        "Fix all five issues in the provided booking frontend, with a test for each."
+      ],
       "acceptance": [
         "All five fixed, with a test for each.",
         "Tests cover login and the bookings list.",
@@ -117,7 +160,11 @@
       ]
     },
     {
-      "day": 7, "weekday": "Sun", "title": "Weekly Project: Booking Web App v1", "aiMode": "build-day", "isProjectDay": true,
+      "day": 7,
+      "weekday": "Sun",
+      "title": "Weekly Project: Booking Web App v1",
+      "aiMode": "build-day",
+      "isProjectDay": true,
       "learn": [],
       "tasks": [
         "Client message: \"Customers want to book online instead of calling, and I need to see my day at a glance.\" Update the scope first.",
@@ -127,7 +174,9 @@
         "Loading, error and empty states everywhere.",
         "Unit tests + one Playwright E2E test (run locally this week; it moves into CI in Week 4)."
       ],
-      "acceptance": ["See the rubric on the Project tab."]
+      "acceptance": [
+        "See the rubric on the Project tab."
+      ]
     }
   ],
   "project": {
@@ -141,13 +190,30 @@
       "Loading, error and empty states everywhere",
       "Unit tests + one Playwright E2E test (local this week)"
     ],
-    "stretch": ["Installable PWA with booking reminders"],
+    "stretch": [
+      "Installable PWA with booking reminders"
+    ],
     "rubric": [
-      { "item": "Booking flow works end to end", "points": 30 },
-      { "item": "Auth + roles in the UI", "points": 20 },
-      { "item": "UX polish + accessibility", "points": 20 },
-      { "item": "Tests", "points": 20 },
-      { "item": "README + screenshots", "points": 10 }
+      {
+        "item": "Booking flow works end to end",
+        "points": 30
+      },
+      {
+        "item": "Auth + roles in the UI",
+        "points": 20
+      },
+      {
+        "item": "UX polish + accessibility",
+        "points": 20
+      },
+      {
+        "item": "Tests",
+        "points": 20
+      },
+      {
+        "item": "README + screenshots",
+        "points": 10
+      }
     ]
   }
 }
