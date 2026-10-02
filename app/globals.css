@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-fg: var(--brand-fg);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+:root {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --surface-2: #f4f4f2;
+  --border: #e4e4e0;
+  --fg: #1c1c1a;
+  --muted: #6b6b66;
+  --brand: #4f46e5;
+  --brand-fg: #ffffff;
+  --accent: #0d9488;
+  --success: #15803d;
+  --warn: #b45309;
+  --danger: #b91c1c;
+}
+.dark {
+  --bg: #0e0f13;
+  --surface: #16181d;
+  --surface-2: #1d2027;
+  --border: #2a2e37;
+  --fg: #ececea;
+  --muted: #9a9ca3;
+  --brand: #818cf8;
+  --brand-fg: #0e0f13;
+  --accent: #2dd4bf;
+  --success: #4ade80;
+  --warn: #fbbf24;
+  --danger: #f87171;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+
+/* Long-form lesson typography */
+.prose-lesson { max-width: 72ch; line-height: 1.75; }
+.prose-lesson h2 { font-size: 1.5rem; font-weight: 700; margin: 2.5rem 0 .75rem; letter-spacing: -.01em; scroll-margin-top: 5rem; }
+.prose-lesson h3 { font-size: 1.15rem; font-weight: 650; margin: 1.75rem 0 .5rem; scroll-margin-top: 5rem; }
+.prose-lesson p { margin: .85rem 0; }
+.prose-lesson ul { list-style: disc; padding-left: 1.4rem; margin: .85rem 0; }
+.prose-lesson ol { list-style: decimal; padding-left: 1.4rem; margin: .85rem 0; }
+.prose-lesson li { margin: .3rem 0; }
+.prose-lesson a { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
+.prose-lesson code:not(pre code) { background: var(--surface-2); border: 1px solid var(--border); padding: .08rem .35rem; border-radius: 5px; font-size: .88em; font-family: var(--font-mono); }
+.prose-lesson blockquote { border-left: 3px solid var(--brand); padding-left: 1rem; color: var(--muted); margin: 1rem 0; }
+.prose-lesson table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: .92rem; display: block; overflow-x: auto; }
+.prose-lesson th, .prose-lesson td { border: 1px solid var(--border); padding: .5rem .7rem; text-align: left; vertical-align: top; }
+.prose-lesson th { background: var(--surface-2); }
+.prose-lesson hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+.shiki { padding: 1rem; border-radius: .6rem; overflow-x: auto; font-size: .85rem; line-height: 1.6; border: 1px solid var(--border); margin: 0; }
+.shiki, .shiki span { color: var(--shiki-light); background-color: var(--shiki-light-bg); }
+.dark .shiki, .dark .shiki span { color: var(--shiki-dark); background-color: var(--shiki-dark-bg); }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

@@ -1,0 +1,175 @@
+{
+  "week": 0,
+  "title": "How Software Works",
+  "tagline": "Web, HTML, CSS, JavaScript, your first API",
+  "goal": "Build the mental model of how the web works and ship a first live page with real data. For trainees with no web background.",
+  "audience": "Complete beginners with no web background.",
+  "skippable": "Week 0 can be skipped by passing the test-out before Day 1. Test-out (2 hours, no AI, mentor present): build a responsive page, fetch data from a public API through a search box (for example, Open-Meteo weather by city), push it to GitHub, explain what happens when a URL is typed into the browser, and solve two of the Week 0 Day 4 console drills.",
+  "outcomes": [
+    "Explain the URL-to-page flow (DNS, TCP/TLS, HTTP, render) out loud in 2 minutes",
+    "Write semantic, accessible HTML with working forms",
+    "Build responsive layouts from 360px to 1440px with Flexbox, Grid and media queries",
+    "Write DOM-manipulating JavaScript with event delegation and no globals",
+    "Call a real API with fetch, handling loading, error and empty states",
+    "Debug with DevTools: Elements, Console, Network, Sources",
+    "Ship a portfolio to GitHub Pages"
+  ],
+  "projectStage": "No booking product yet. You are building the muscles: HTML, CSS, JS, fetch, Git. Week 0 has no PRs, so explain-back runs on the day's last commit and 'How I verified this' goes in the README.",
+  "days": [
+    {
+      "day": 1, "weekday": "Mon", "title": "How the Web Works + Setup", "aiMode": "tutor-only",
+      "learn": [
+        "What happens when a URL is typed (DNS, server, HTTP request, response, render)",
+        "Client vs server; what frontend, backend, database and API mean",
+        "Terminal basics (cd, ls, mkdir), files and folders, relative vs absolute paths",
+        "VS Code, Live Server, Git + GitHub",
+        "Browser DevTools: Elements, Console, Network"
+      ],
+      "tasks": [
+        "Install VS Code, Git, Node.js and an AI coding tool (Claude Code, Codex or OpenCode). Set up ChatGPT or Claude as a tutor for the mornings. Create a GitHub account.",
+        "Open any real website, list every request in the Network tab and label each one (HTML, CSS, JS, image, API call).",
+        "Draw the URL-to-page flow on paper or in Excalidraw.",
+        "Set up a project folder with index.html, styles/ and images/.",
+        "Open the page through Live Server and through file:// and note the difference.",
+        "Create a repo, make a first commit and push it."
+      ],
+      "acceptance": [
+        "Can explain the URL-to-page flow out loud in 2 minutes.",
+        "First repo is on GitHub with at least one commit.",
+        "No broken asset paths."
+      ]
+    },
+    {
+      "day": 2, "weekday": "Tue", "title": "HTML + Forms", "aiMode": "tutor-only",
+      "learn": [
+        "Semantic tags (header, nav, main, section, article, footer), headings, lists, links, images, alt text",
+        "Forms, labels, input types, textarea, select, buttons, required fields",
+        "Keyboard navigation"
+      ],
+      "tasks": [
+        "Build a profile page with a heading, intro, image, skills list and nav.",
+        "Add a contact form with name, email and message.",
+        "Fill the whole form using only the keyboard."
+      ],
+      "acceptance": [
+        "One h1, and heading levels follow a logical order.",
+        "Every image has meaningful alt text. Every input has a label.",
+        "Page passes validator.w3.org.",
+        "Browser blocks submit on empty required fields or an invalid email."
+      ]
+    },
+    {
+      "day": 3, "weekday": "Wed", "title": "CSS + Responsive Layout", "aiMode": "tutor-only",
+      "learn": [
+        "Selectors, specificity, box model, units (px, rem, %), typography, colors",
+        "Flexbox, Grid, media queries, mobile-first, responsive images",
+        "Hover, focus and active states"
+      ],
+      "tasks": [
+        "Style the profile page from an external stylesheet.",
+        "Add a 3-card project grid that stacks on mobile.",
+        "Add a 2-column layout (content + sidebar) that also stacks on mobile.",
+        "Add hover, active and focus states to buttons and links."
+      ],
+      "acceptance": [
+        "No inline styles.",
+        "Clean layout from 360px to 1440px with no horizontal scroll.",
+        "Focus is visible when tabbing, and hover, active and focus states look distinct."
+      ]
+    },
+    {
+      "day": 4, "weekday": "Thu", "title": "JavaScript + DOM", "aiMode": "tutor-only",
+      "learn": [
+        "const/let, types, operators, conditionals, loops, functions, scope, truthy/falsy",
+        "Arrays (push, pop, slice, splice, indexOf, includes), objects, nested data",
+        "The DOM tree, querySelector/querySelectorAll, creating and removing elements, textContent vs innerHTML, classList",
+        "Events: addEventListener, the event object, preventDefault, bubbling, event delegation, input vs change vs submit",
+        "Loading scripts with type=\"module\" (works on Live Server, not file://)"
+      ],
+      "tasks": [
+        "Morning drills (by hand, in the console): reverse a string, FizzBuzz, count words in a string, a number guessing game (1-100), a grade calculator that turns a 0-100 score into a letter grade.",
+        "Render the project cards from a JavaScript array of objects (create elements instead of hardcoding HTML).",
+        "Add a filter that shows project cards by tag, using one delegated click listener on the card list."
+      ],
+      "acceptance": [
+        "No var, no inline JavaScript, no global variables.",
+        "Works without a page reload, zero console errors.",
+        "User text is rendered with textContent (no injection).",
+        "One listener on the card list, not one per card.",
+        "Data functions handle empty arrays and missing fields without crashing."
+      ]
+    },
+    {
+      "day": 5, "weekday": "Fri", "title": "First API Call", "aiMode": "tutor-only",
+      "learn": [
+        "JSON, fetch, Promises, async/await, HTTP status codes",
+        "Loading, error and empty states",
+        "Date basics, localStorage, JSON.stringify/parse, try/catch"
+      ],
+      "tasks": [
+        "Add a live weather widget using Open-Meteo (no API key needed): find the city with the geocoding API (geocoding-api.open-meteo.com), then show current weather + a 5-day forecast with readable dates, and an empty state when no city matches.",
+        "Show a loading state, an error state with a Retry button, and the data.",
+        "Save the last 5 searched cities as a JSON array in localStorage and show them as quick links.",
+        "Find the request in the Network tab."
+      ],
+      "acceptance": [
+        "Can explain the request's URL, method, status code and response body.",
+        "With the network off, the error state shows (not a blank widget).",
+        "Non-2xx responses are treated as errors.",
+        "Corrupted search history falls back to an empty list."
+      ]
+    },
+    {
+      "day": 6, "weekday": "Sat", "title": "Debug Lab (no AI)", "aiMode": "no-ai",
+      "learn": [
+        "Inspecting and live-editing styles, device toolbar",
+        "Reading Console errors, Network tab for 404s",
+        "Console methods (log, table, error)",
+        "Breakpoints and step-through in the Sources panel"
+      ],
+      "brokenLab": [
+        "A broken image path",
+        "A CSS specificity bug (style not applying)",
+        "A card that overflows on mobile",
+        "A form input with no label",
+        "A fetch call that fails silently",
+        "A click handler attached twice, so one click fires two actions and duplicates items"
+      ],
+      "tasks": ["Fix all six bugs in the provided broken page, using only DevTools and your own reasoning."],
+      "acceptance": [
+        "All six fixed, zero console or network errors.",
+        "Each fix written up as: symptom → cause → fix → how verified."
+      ]
+    },
+    {
+      "day": 7, "weekday": "Sun", "title": "Weekly Project: Personal Portfolio Site", "aiMode": "build-day", "isProjectDay": true,
+      "learn": [],
+      "tasks": [
+        "About section, projects grid (3+ cards), contact form, live API widget.",
+        "Dark mode toggle saved in localStorage (corrupted data falls back to the default) and a live character counter on the message field.",
+        "Contact form handled in JavaScript: novalidate, preventDefault, your own validation messages with checkValidity(), a success message, and no page reload. An empty or invalid field shows your message and nothing is submitted.",
+        "Fully responsive from 360px to 1440px.",
+        "Pushed to GitHub, deployed on GitHub Pages, README with screenshots."
+      ],
+      "acceptance": ["See the rubric on the Project tab."]
+    }
+  ],
+  "project": {
+    "name": "Personal Portfolio Site",
+    "requirements": [
+      "About section, projects grid (3+ cards), contact form, live API widget",
+      "Dark mode toggle saved in localStorage (corrupted data falls back to the default) and a live character counter on the message field",
+      "Contact form handled in JavaScript: novalidate, preventDefault, your own validation messages with checkValidity(), a success message, no page reload",
+      "Fully responsive from 360px to 1440px",
+      "Pushed to GitHub, deployed on GitHub Pages, README with screenshots"
+    ],
+    "stretch": ["A page that lists your public repos from the GitHub API."],
+    "rubric": [
+      { "item": "Semantics + accessibility", "points": 20 },
+      { "item": "Responsive layout + CSS states", "points": 20 },
+      { "item": "JavaScript + API widget with loading and error states", "points": 25 },
+      { "item": "Validator + zero console errors", "points": 15 },
+      { "item": "README + GitHub Pages", "points": 20 }
+    ]
+  }
+}

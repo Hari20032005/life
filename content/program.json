@@ -1,0 +1,20 @@
+{
+  "aiRules": [
+    { "when": "Mornings", "rule": "Learn by hand. AI (ChatGPT, Claude or any chat assistant) is a tutor only. It can explain, quiz and review, but the trainee types the code." },
+    { "when": "Afternoons", "rule": "Build with AI. Any coding agent is allowed (Claude Code, Codex, OpenCode)." },
+    { "when": "Every PR", "rule": "Explain-back: the trainee must be able to explain every changed line. A mentor checks by pointing at 3 random lines. If they can't explain it, it doesn't merge." },
+    { "when": "Saturdays", "rule": "Debug lab with no AI. The one exception is the Week 6 AI patch review, where AI is used only after the bug has been found by hand." },
+    { "when": "Sundays & Week 6 Days 3-5", "rule": "Build days: the afternoon rules apply all day, and explain-back still applies." },
+    { "when": "Week 0", "rule": "No PRs yet: explain-back runs on the day's last commit, and 'How I verified this' goes in the README." }
+  ],
+  "groundRules": [
+    "In all weekly projects, the goal is to fully test, debug and ship bug-free work.",
+    "Weeks 1-5 build one product that grows each week: a booking system for a small business (clinic, gym or salon). Week 6 is a new client problem.",
+    "Weeks 1 and 6 start from a client brief and a written scope. Weeks 2-5 start from a short client message, and trainees update the scope before they build.",
+    "Postgres runs locally in Docker during development. The production database comes in Week 4, when the app is deployed.",
+    "Every project is pushed to GitHub with a README. Every PR has a 'How I verified this' section.",
+    "Never paste secrets, API keys or client data into an AI coding assistant. AI features in the product send only the fields they need (no phone numbers or emails) to a provider the client has approved.",
+    "Each weekly project has a stretch task for trainees who finish early. Backend concepts carry across languages, so some stretch tasks rebuild a piece in Python, Go or Ruby."
+  ],
+  "goal": "By the end of Week 6, a trainee can take a business problem from a client, scope it, design the architecture, build it full-stack with AI, deploy it on a server, add an AI feature (RAG + tool calling), and demo it. Target roles: forward deployed engineer and full-stack AI developer."
+}

@@ -1,0 +1,46 @@
+{
+  "name": "fullstack-ai-academy",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc --noEmit",
+    "content:check": "tsx scripts/content-check.ts"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.23",
+    "@radix-ui/react-slot": "^1.3.3",
+    "@radix-ui/react-tabs": "^1.1.21",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tanstack/react-query": "^5.104.0",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^13.5.0",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^1.49.0",
+    "mermaid": "^12.0.0",
+    "next": "^16.3.8",
+    "next-mdx-remote": "^6.0.0",
+    "next-themes": "^0.4.6",
+    "postcss": "^8.5.28",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "recharts": "^3.10.1",
+    "remark-gfm": "^4.0.1",
+    "server-only": "^0.0.1",
+    "shiki": "^4.5.0",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "zod": "^4.6.5",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "typescript": "5.9"
+  }
+}

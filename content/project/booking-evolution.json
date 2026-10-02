@@ -1,0 +1,56 @@
+[
+  {
+    "week": 1, "name": "Architecture", "title": "Booking API v1",
+    "summary": "Express API → services → data access → Postgres. Services, customers, staff, staff_hours, bookings. No double bookings enforced in the DB and in a locking transaction.",
+    "diagram": "flowchart LR\n  C[Client / Bruno] --> R[Routes + Zod]\n  R --> S[Services<br/>business rules]\n  S --> D[Data access<br/>Drizzle]\n  D --> P[(Postgres<br/>pgvector image)]\n  S -. transaction + FOR UPDATE .-> P",
+    "folders": "booking/\n├─ src/\n│  ├─ routes/        # HTTP only: parse, validate, call service\n│  ├─ services/      # business rules (no double booking, no past bookings)\n│  ├─ data/          # Drizzle queries, the only place SQL lives\n│  ├─ schemas/       # Zod\n│  └─ index.ts\n├─ drizzle/          # versioned migrations\n├─ scripts/          # seed.ts, import-customers.ts\n├─ tests/\n├─ bruno/\n├─ docker-compose.yml\n└─ AGENTS.md",
+    "schema": "customers(id, name, email UNIQUE, phone, created_at)\nservices(id, name, duration_min CHECK > 0, price_cents CHECK >= 0)\nstaff(id, name)\nstaff_hours(id, staff_id → staff, weekday 0-6, opens_at, closes_at)\nbookings(id, customer_id → customers RESTRICT, service_id → services RESTRICT,\n         staff_id → staff RESTRICT, starts_at timestamptz, ends_at timestamptz,\n         status CHECK in ('booked','cancelled'))\nUNIQUE (staff_id, starts_at) WHERE status <> 'cancelled'\nINDEX bookings(starts_at); GIN (name gin_trgm_ops) on customers",
+    "api": "GET    /health\nGET/POST/PUT/DELETE /services\nGET/POST/PUT/DELETE /customers\nPOST   /bookings                 → 201 | 400 | 409\nGET    /bookings?date=&q=&page=  → 200 paginated\nPOST   /bookings/:id/cancel      → 200 (status = cancelled)\nGET    /availability?date=&serviceId=",
+    "flow": "sequenceDiagram\n  participant U as Client\n  participant R as Route\n  participant S as Service\n  participant DB as Postgres\n  U->>R: POST /bookings\n  R->>R: Zod validate\n  R->>S: createBooking(input)\n  S->>DB: BEGIN\n  S->>DB: SELECT staff FOR UPDATE\n  S->>DB: overlap query\n  alt overlaps\n    S-->>R: ConflictError\n    R-->>U: 409\n  else free\n    S->>DB: INSERT booking\n    S->>DB: COMMIT\n    R-->>U: 201\n  end"
+  },
+  {
+    "week": 2, "name": "Authentication", "title": "Booking API v2",
+    "summary": "Users and roles (owner, staff, customer). Cookie JWT sessions, Google login, permission middleware on every route, Helmet/CORS/rate limits/Origin check, CI with Postgres service.",
+    "diagram": "flowchart LR\n  B[Browser] -->|cookie JWT| M[Helmet · CORS · RateLimit · Origin check]\n  M --> A[authenticate]\n  A --> P[permission middleware<br/>role + ownership]\n  P --> R[Routes → Services → DB]\n  G[Google OIDC] -.->|code + state| A",
+    "folders": "src/\n├─ middleware/\n│  ├─ authenticate.ts\n│  ├─ permit.ts        # permit('owner') | ownsBooking\n│  ├─ origin-check.ts\n│  └─ rate-limit.ts\n├─ auth/\n│  ├─ password.ts      # argon2\n│  ├─ tokens.ts        # JWT sign/verify (1h)\n│  └─ google.ts        # Arctic\n└─ routes/auth.ts",
+    "schema": "users(id, email, password_hash NULL, role CHECK in ('owner','staff','customer'), google_sub NULL UNIQUE)\nUNIQUE INDEX ON users (lower(email))\ncustomers.user_id → users ; staff.user_id → users",
+    "api": "POST /signup  POST /login  POST /logout  GET /me\nGET  /auth/google  GET /auth/google/callback\nPOST /auth/google/link   (confirm password)\nAll booking routes: 401 if no session, 403 if wrong role / not owner of the booking",
+    "flow": "sequenceDiagram\n  participant B as Browser\n  participant API\n  participant G as Google\n  B->>API: GET /auth/google\n  API-->>B: 302 to Google (state, PKCE) + state cookie\n  B->>G: consent\n  G-->>B: 302 /callback?code&state\n  B->>API: callback\n  API->>API: verify state\n  API->>G: exchange code\n  G-->>API: id_token (email, email_verified)\n  API-->>B: Set-Cookie session (httpOnly)"
+  },
+  {
+    "week": 3, "name": "Frontend", "title": "Booking Web App v1",
+    "summary": "Monorepo with api/, web/, packages/shared (Zod). Next.js App Router, TanStack Query, cookie auth, proxy.ts route protection, role-based dashboards, Playwright E2E.",
+    "diagram": "flowchart LR\n  U[User] --> N[Next.js web<br/>RSC + client components]\n  N -->|fetch credentials include| A[Express API]\n  A --> P[(Postgres)]\n  SH[packages/shared<br/>Zod schemas] --- N\n  SH --- A",
+    "folders": "booking/\n├─ api/\n├─ web/\n│  ├─ app/ (/, /services, /services/[id], /book, /bookings/[id], /login, /signup, /dashboard)\n│  ├─ components/ (Header, Footer, Button, ServiceCard)\n│  ├─ lib/api.ts          # the only place fetch lives\n│  └─ proxy.ts            # protects /dashboard\n├─ packages/shared/       # Zod schemas\n└─ package.json           # npm workspaces",
+    "schema": "Adds booking status 'completed'. Business time zone stored (e.g. Asia/Kolkata) and all times rendered in it.",
+    "api": "PATCH /bookings/:id/status (owner only)\nGET /availability?date=&serviceId=  (TanStack Query, refetched on date change)\n409 → UI shows 'slot just got taken'",
+    "flow": "sequenceDiagram\n  actor C as Customer\n  participant W as Next.js\n  participant A as API\n  C->>W: choose service + date\n  W->>A: GET /availability\n  A-->>W: slots\n  C->>W: pick slot, submit\n  W->>A: POST /bookings (cookie)\n  alt slot taken\n    A-->>W: 409\n    W-->>C: This slot was just taken, pick another\n    W->>A: refetch availability\n  else ok\n    A-->>W: 201\n    W-->>C: Confirmation\n  end"
+  },
+  {
+    "week": 4, "name": "Deployment", "title": "Booking App, Live",
+    "summary": "Docker Compose behind Caddy on a VPS, GHCR images, migrations on deploy, Sentry, uptime alerts, nightly pg_dump to S3, RUNBOOK.md.",
+    "diagram": "flowchart LR\n  I[Internet] -->|443| CD[Caddy<br/>auto HTTPS]\n  CD -->|app.domain| W[web :3000<br/>127.0.0.1]\n  CD -->|api.domain| A[api :4000<br/>127.0.0.1]\n  W -->|http://api:4000| A\n  A --> P[(Postgres<br/>volume)]\n  P -->|nightly pg_dump| S3[(S3-compatible<br/>off-server)]\n  A -.-> SE[Sentry]\n  UK[Uptime check] -.-> CD",
+    "folders": "deploy/\n├─ docker-compose.prod.yml\n├─ Caddyfile\n├─ backup.sh\n.github/workflows/\n├─ ci.yml          # lint + tests + e2e\n└─ deploy.yml      # build → GHCR → ssh deploy → migrate\nRUNBOOK.md",
+    "schema": "No schema change. Production DB chosen (Postgres in Docker on the VPS vs Neon/Supabase) and justified. First owner created by a one-off script, not the seed.",
+    "api": "GET /health used by Docker healthcheck + uptime monitor.",
+    "flow": "sequenceDiagram\n  participant Dev\n  participant GH as GitHub Actions\n  participant R as GHCR\n  participant V as VPS\n  Dev->>GH: merge PR to main\n  GH->>GH: lint + tests\n  GH->>R: build + push images (sha tag)\n  GH->>V: ssh: docker compose pull\n  V->>V: run migrations\n  alt migration fails\n    V-->>GH: exit 1, old containers keep running\n  else ok\n    V->>V: docker compose up -d\n  end"
+  },
+  {
+    "week": 5, "name": "AI Receptionist", "title": "AI Receptionist",
+    "summary": "Chat widget + RAG over business documents (pgvector) + tool calls with pending actions confirmed by the user, evals in CI, tracing, daily token limits.",
+    "diagram": "flowchart LR\n  U[Chat widget] --> C[/POST /ai/chat/]\n  C --> G[Guardrails + prompt v3]\n  G --> RT[Retriever<br/>pgvector + keyword]\n  RT --> L[LLM]\n  L -->|tool_use| T[Tools → service layer]\n  T -->|pending action id| U\n  U -->|Confirm click| X[/POST /ai/actions/:id/confirm/]\n  X --> SV[Booking service]\n  C -.-> TR[(traces table)]",
+    "folders": "src/ai/\n├─ prompts/receptionist.v3.md\n├─ rag/ (chunk.ts, embed.ts, retrieve.ts)\n├─ tools/ (check_availability.ts, create_booking.ts, cancel_booking.ts)\n├─ pending-actions.ts\n├─ trace.ts\n└─ limits.ts\nevals/\n├─ cases.json   # 30 cases\n└─ run.ts       # runs in CI",
+    "schema": "documents(id, name) ; chunks(id, document_id, content, embedding vector(1536), tsv)\npending_actions(id, user_id, kind, payload, status, expires_at)\nai_traces(id, user_id, conversation_id, step, input, output, tokens_in, tokens_out, cost_inr)\nai_usage(user_id, day, tokens)",
+    "api": "POST /ai/summary  GET /ai/summary/stream\nPOST /ai/chat\nPOST /ai/actions/:id/confirm   ← only way a create/cancel runs\n429 when the daily token limit is hit",
+    "flow": "sequenceDiagram\n  actor U as User\n  participant API\n  participant LLM\n  participant DB\n  U->>API: Book me a haircut tomorrow 10am\n  API->>LLM: messages + tools\n  LLM-->>API: tool_use check_availability\n  API->>DB: availability (as the user)\n  API->>LLM: tool_result\n  LLM-->>API: tool_use create_booking\n  API->>DB: INSERT pending_action\n  API-->>U: Confirm booking? [Confirm]\n  U->>API: POST /ai/actions/:id/confirm\n  API->>DB: createBooking (same auth + validation)\n  API-->>U: Booked"
+  },
+  {
+    "week": 6, "name": "Capstone", "title": "Client Solution v1.0",
+    "summary": "A new client problem solved with the same building blocks: discovery, architecture doc, small PRs, change request handling, launch checklist, demo and handover pack.",
+    "diagram": "flowchart TB\n  D[Discovery call] --> PS[Problem statement + success criteria]\n  PS --> AD[Architecture doc + cost + risks]\n  AD --> TP[Task plan, small PRs]\n  TP --> B[Build with AI + explain-back]\n  B --> CR{Change request?}\n  CR -->|now| B\n  CR -->|v2| BL[Written v2 backlog]\n  B --> L[Launch checklist<br/>security · evals · backups · monitoring · rollback]\n  L --> DM[Demo + handover pack]",
+    "folders": "client-solution/\n├─ README.md           # local setup vs deployment setup, AI section\n├─ docs/ARCHITECTURE.md\n├─ docs/API.md\n├─ RUNBOOK.md\n├─ docs/KNOWN-LIMITS.md\n└─ docs/COST.md",
+    "schema": "Depends on the client. Reuse users, roles, documents/chunks, pending_actions and traces from Weeks 2–5.",
+    "api": "Depends on the client. Reuse auth, RAG and tool-calling patterns.",
+    "flow": "sequenceDiagram\n  participant C as Client (mentor)\n  participant E as You\n  C->>E: describes the problem (30 min)\n  E->>C: 1-page problem statement\n  C-->>E: sign-off\n  E->>C: architecture + cost\n  C-->>E: plan approved\n  C->>E: change request (Thu)\n  E->>C: impact on scope/time/cost, v1 vs v2\n  E->>C: live demo + handover pack"
+  }
+]

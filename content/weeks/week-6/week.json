@@ -1,0 +1,78 @@
+{
+  "week": 6,
+  "title": "Forward Deployed Capstone",
+  "tagline": "Discovery → scope → build → deploy → demo → handover",
+  "goal": "Solve a new client problem end to end the way a forward deployed engineer does: discovery, scope, architecture, build, deploy, demo and handover.",
+  "outcomes": [
+    "Run a client discovery call and write a problem statement with measurable success criteria",
+    "Write an architecture doc with cost estimate, risks and single points of failure",
+    "Ship in small, tested PRs while driving an AI agent through a task list",
+    "Handle a mid-build change request with a written trade-off",
+    "Launch with a pre-launch checklist: security, evals, backups, monitoring, rollback",
+    "Review an AI patch critically and deliver a handover pack and live demo"
+  ],
+  "projectStage": "Capstone — a brand-new client problem. Reuse auth, deploy pipeline, RAG and tools from Weeks 1-5.",
+  "days": [
+    {
+      "day": 1, "weekday": "Mon", "title": "Discovery", "aiMode": "mixed",
+      "learn": ["How to run a client discovery call, asking about the problem before the solution", "Mapping the current workflow, success metrics, constraints (budget, data, privacy, timeline)"],
+      "tasks": ["A mentor plays the client with a real-world problem. Examples: a clinic flooded with WhatsApp appointment requests, an accounting firm sorting hundreds of invoices by hand, a real estate agency answering the same property questions all day.", "Run a 30-minute discovery call.", "Write a 1-page problem statement + success criteria and get \"client\" sign-off."],
+      "acceptance": ["The problem statement uses the client's own words and numbers.", "Success criteria are measurable."]
+    },
+    {
+      "day": 2, "weekday": "Tue", "title": "Architecture + Plan", "aiMode": "mixed",
+      "learn": ["Writing an architecture doc, diagrams, choosing the tech stack for the client's constraints", "Production-grade basics (stateless servers, horizontal scaling, caching, background jobs and queues, single points of failure)", "Build vs buy, estimating monthly cost (hosting + AI tokens), listing risks, writing a task plan an AI agent can follow"],
+      "tasks": ["Architecture doc: diagram, data model, API, AI components, hosting, monthly cost estimate, risks.", "Break the build into small tasks, each with a done condition.", "Review with the mentor and adjust."],
+      "acceptance": ["Every component is justified in one line.", "The doc names each single point of failure and how it is handled.", "Monthly cost estimate fits the client's budget.", "The mentor approves the plan before any code is written."]
+    },
+    {
+      "day": 3, "weekday": "Wed", "title": "Build", "aiMode": "build-day",
+      "learn": ["Breaking a plan into small PRs, driving an AI agent through a task list, keeping main deployable at all times"],
+      "tasks": ["Build the core flow with AI: one small PR per task, explain-back on every PR.", "Reuse what works from Weeks 1-5 (auth, deploy pipeline, RAG, tools)."],
+      "acceptance": ["Core flow works end to end locally.", "Every PR has tests and a \"How I verified this\" section."]
+    },
+    {
+      "day": 4, "weekday": "Thu", "title": "Build + Client Change Request", "aiMode": "build-day",
+      "learn": ["Handling change requests: impact on scope, timeline and cost", "Saying \"not in v1\" politely, getting the decision in writing"],
+      "tasks": ["Midday, the \"client\" sends a change request.", "Decide what changes now and what waits, then reply to the client with the trade-off.", "Keep building."],
+      "acceptance": ["Written reply to the client explaining the impact on scope and timeline.", "The change is merged or explicitly moved to v2."]
+    },
+    {
+      "day": 5, "weekday": "Fri", "title": "Deploy, Evals + Hardening", "aiMode": "build-day",
+      "learn": ["A pre-launch checklist: security, performance, backups, monitoring, rollback plan"],
+      "tasks": ["Deploy to the VPS with HTTPS, CI/CD, monitoring and backups.", "Run evals on the AI parts and security checks on the API.", "Fix everything that fails."],
+      "acceptance": ["Live URL, monitoring on, backups tested.", "Eval results and security checks recorded in the README."]
+    },
+    {
+      "day": 6, "weekday": "Sat", "title": "Debug Lab + AI Patch Review", "aiMode": "no-ai",
+      "learn": ["AI guardrails: never accept AI output blindly, always verify with tests, never paste secrets into prompts, keep diffs small"],
+      "brokenLab": ["Failing tests + an AI-suggested patch that looks right but reintroduces a security bug"],
+      "tasks": ["Find the hidden bug in the AI patch and explain it.", "Fix it by hand.", "Then ask an AI agent to propose its own fix. Compare it with yours and note any differences.", "Review your own capstone for the same class of bug."],
+      "acceptance": ["All tests pass.", "The bug and the fix are written up in the README as: symptom → cause → fix → how verified.", "The README lists how the AI's fix differed from yours and what the capstone review found."]
+    },
+    {
+      "day": 7, "weekday": "Sun", "title": "Capstone: Client Solution v1.0 + Demo Day", "aiMode": "build-day", "isProjectDay": true,
+      "learn": [],
+      "tasks": ["Live demo to the \"client\" (10 minutes): problem, solution, live walkthrough, results against the success criteria.", "Loom video of the demo and a README with screenshots.", "Handover pack: README, architecture doc, API reference, runbook, known limits, monthly cost.", "Local setup and deployment setup clearly separated.", "AI section in the README: which parts AI agents helped build, how each part was verified, and where the AI was wrong."],
+      "acceptance": ["See the rubric on the Project tab."]
+    }
+  ],
+  "project": {
+    "name": "Client Solution v1.0",
+    "requirements": [
+      "Live 10-minute demo: problem, solution, walkthrough, results vs success criteria",
+      "Loom video + README with screenshots",
+      "Handover pack: README, architecture doc, API reference, runbook, known limits, monthly cost",
+      "Local setup and deployment setup clearly separated",
+      "AI section in the README: what AI built, how it was verified, where it was wrong"
+    ],
+    "stretch": ["A second channel for the client (WhatsApp or email)", "A usage dashboard showing results against the success criteria"],
+    "rubric": [
+      { "item": "Solves the client's actual problem", "points": 30 },
+      { "item": "Full-stack + AI functionality", "points": 20 },
+      { "item": "Security, tests + evals", "points": 15 },
+      { "item": "Deployment + operations", "points": 15 },
+      { "item": "Demo, handover docs + AI workflow reflection", "points": 20 }
+    ]
+  }
+}

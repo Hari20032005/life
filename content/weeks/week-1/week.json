@@ -1,0 +1,184 @@
+{
+  "week": 1,
+  "title": "Backend + Database",
+  "tagline": "TypeScript, Express, Postgres",
+  "goal": "Build a REST API backed by Postgres from a client brief, with validation and tests. This is the start of the booking product.",
+  "outcomes": [
+    "Write typed, tested TypeScript with an AI agent you control through a rules file",
+    "Design REST endpoints with correct verbs, status codes and a consistent error format",
+    "Model a booking domain in Postgres with constraints that make invalid states impossible",
+    "Prevent double bookings with a partial unique index and a locking transaction",
+    "Validate input with Zod and prove behaviour with Vitest + Supertest",
+    "Review AI-written code and tests critically"
+  ],
+  "projectStage": "Booking API v1 — architecture: Express routes → services → data access (Drizzle) → Postgres (pgvector image). Starts from a messy WhatsApp message from a salon owner.",
+  "days": [
+    {
+      "day": 1, "weekday": "Mon", "title": "AI Dev Setup, TypeScript + Git Workflow", "aiMode": "mixed",
+      "learn": [
+        "Node.js, npm, package.json scripts, TypeScript basics (types, interfaces, unions), folder structure, ESLint + Prettier, Vitest basics",
+        "Modern JavaScript: arrow functions, template strings, destructuring, spread/rest, optional chaining, nullish coalescing, ES modules, map/filter/reduce/find/some/every/sort, immutability, callbacks, closures, the event loop",
+        "AI + Git workflow: project rules file (AGENTS.md or CLAUDE.md), scoped requests, reading a diff before accepting it, branches, pull requests, merge conflicts"
+      ],
+      "tasks": [
+        "Install anything skipped in Week 0 (Node.js LTS, VS Code, a chat tutor), plus Docker Desktop and two of Claude Code, Codex and OpenCode. Run docker run hello-world.",
+        "Create a TypeScript project with lint, format and dev scripts.",
+        "Write pure functions for a contact list: case-insensitive search by partial name, count by first letter (reduce), sort by name without mutating the original array, and updateContact(contact, changes) that returns a new object using spread. Check them with a few Vitest tests. Do this on a feature branch, open a PR and review the diff.",
+        "Write a rules file for the AI agent (stack, folder structure, \"never commit secrets\", \"run tests before saying done\").",
+        "Ask the AI agent to explain one file in plain words, then check the explanation against the code and note what it got wrong.",
+        "Give the same scoped request to two of Claude Code, Codex and OpenCode, and compare the diffs."
+      ],
+      "acceptance": [
+        "npm install && npm run dev works from a clean clone.",
+        "Lint passes with zero errors.",
+        "Original arrays and objects are never mutated (tested).",
+        "Commits are small, with clear one-line messages.",
+        "PR merged with a description and a \"How I verified this\" section."
+      ]
+    },
+    {
+      "day": 2, "weekday": "Tue", "title": "HTTP Server + REST", "aiMode": "mixed",
+      "learn": [
+        "API styles (REST, webhooks, WebSockets) and when each fits",
+        "Vite as a frontend dev server, AbortController",
+        "HTTP verbs, status codes, headers, Content-Type",
+        "Express setup, nodemon or Node's watch mode, express.Router, middleware order, JSON body parsing, 404 handler, error handler, .env config"
+      ],
+      "tasks": [
+        "Create /ping returning { \"msg\": \"pong\" } and /health returning uptime and timestamp.",
+        "Build CRUD for /services (name, duration, price) using an in-memory array.",
+        "Test every route with Bruno and commit the collection to the repo (Postman works too; curl for quick checks).",
+        "On a feature branch, port the Week 0 weather widget (or test-out page) into a Vite + TypeScript project and run it with npm run dev. Add AbortController so a new city search cancels the previous requests. Open a PR and review the diff.",
+        "Create and resolve one merge conflict on purpose."
+      ],
+      "acceptance": [
+        "Port comes from .env. .env is gitignored and .env.example is committed.",
+        "Every route returns the right status code (200, 201, 204, 400, 404), with a JSON body on every non-204 response.",
+        "Invalid JSON returns 400 with a clear message, not a crash.",
+        "An unknown path returns a 404 JSON error, not Express's default HTML page.",
+        "The merge conflict and how it was resolved are explained in the PR.",
+        "The Bruno collection passes with bru run.",
+        "The Vite port builds with npm run build and zero type errors. Searching again before a result arrives never shows the older result."
+      ]
+    },
+    {
+      "day": 3, "weekday": "Wed", "title": "Postgres + SQL by Hand", "aiMode": "tutor-only",
+      "learn": [
+        "Run Postgres with docker compose (pgvector/pgvector:pg17 image so Week 5 works without changes); connect with psql and a GUI",
+        "Tables, data types, primary keys, foreign keys, ON DELETE CASCADE vs RESTRICT, UNIQUE, NOT NULL, CHECK, defaults, timestamptz",
+        "SELECT, INSERT, UPDATE, DELETE, WHERE, ORDER BY, LIMIT/OFFSET, RETURNING, INSERT ... ON CONFLICT (upsert)",
+        "INNER and LEFT JOIN, GROUP BY, HAVING, indexes"
+      ],
+      "tasks": [
+        "Design customers, services, staff, staff_hours (weekday, opens_at, closes_at) and bookings tables.",
+        "Make customers.email UNIQUE.",
+        "Write 10 queries by hand: bookings for a day, bookings per customer, customers with zero bookings, revenue per service, and so on.",
+        "Add a partial unique index that blocks two active bookings for the same staff member at the same start time: CREATE UNIQUE INDEX ON bookings (staff_id, starts_at) WHERE status <> 'cancelled'.",
+        "Add an index on bookings.starts_at and explain why.",
+        "Choose ON DELETE CASCADE or RESTRICT for each foreign key and justify it in one line."
+      ],
+      "acceptance": [
+        "Duplicate email insert fails with a constraint error.",
+        "Double booking fails at the database level, and a cancelled slot can be booked again.",
+        "Deleting a parent row cascades or is blocked as chosen, shown with one query each.",
+        "Can explain INNER vs LEFT JOIN with an example from this schema."
+      ]
+    },
+    {
+      "day": 4, "weekday": "Thu", "title": "Connect the API to the Database", "aiMode": "mixed",
+      "learn": [
+        "Drizzle ORM (and reading the SQL it generates), parameterized queries, migrations as versioned files, seed scripts",
+        "Separating routes, services and data access; connection pools; handling database errors",
+        "Transactions and row locks (SELECT ... FOR UPDATE), EXPLAIN ANALYZE, pg_trgm indexes for text search"
+      ],
+      "tasks": [
+        "Replace the in-memory array with Postgres.",
+        "Split the API into routes, services and data access modules. Routes never touch the database directly.",
+        "Reject overlapping bookings in the service layer, inside a transaction that locks the staff row (SELECT ... FOR UPDATE).",
+        "Add migrations and a seed script (seed 10,000 bookings across at least 5,000 customers so query plans are realistic).",
+        "Enable pg_trgm in a migration and add a GIN index on customer name.",
+        "Build POST /bookings and GET /bookings?date=, with pagination (LIMIT/OFFSET or cursor) and search by customer name (ILIKE).",
+        "Ask the AI agent to write inline documentation for the data layer, then fix anything that does not match the code.",
+        "Stop Postgres and observe what the API does."
+      ],
+      "acceptance": [
+        "Database can be dropped and rebuilt from migrations + seed with one command.",
+        "With Postgres down, the API returns a 500 JSON response with no stack trace leaked.",
+        "Overlapping bookings (a 60-minute booking at 10:00, then one at 10:30) return 409 Conflict with a readable message.",
+        "No route handler contains SQL or ORM calls.",
+        "Pagination and search run in SQL, not by fetching everything and filtering in JavaScript.",
+        "pg_trgm is enabled in a migration, a GIN index supports name search, and EXPLAIN ANALYZE shows it being used for a search of 3+ characters."
+      ]
+    },
+    {
+      "day": 5, "weekday": "Fri", "title": "Validation + Tests", "aiMode": "mixed",
+      "learn": ["Zod schemas, a consistent error response format", "Vitest + Supertest, test database setup, what makes a good test, how to review tests an AI wrote"],
+      "tasks": [
+        "Add Zod validation to every route.",
+        "Write a happy-path test and at least one failure test per route.",
+        "Ask the AI agent to write tests for one route, then review and correct them.",
+        "Break the code on purpose and confirm a test goes red."
+      ],
+      "acceptance": [
+        "npm test is green.",
+        "Invalid input returns 400 with field-level errors.",
+        "The mentor breaks 3 lines of their choice, and at least one test goes red for each."
+      ]
+    },
+    {
+      "day": 6, "weekday": "Sat", "title": "Debug Lab (no AI)", "aiMode": "no-ai",
+      "learn": ["VS Code debugger, breakpoints, reading stack traces", "Reading Postgres logs", "The raw pg driver (node-postgres) and its connection pool"],
+      "brokenLab": [
+        "A SQL query built by string concatenation (SQL injection)",
+        "A missing await that returns a Promise instead of data",
+        "Errors returned with status 200",
+        "A missing foreign key, so bookings point at deleted customers and the revenue report silently drops them",
+        "A pool client that is never released (the API hangs after 10 requests)",
+        "A price column stored as text, so sorting by price is wrong",
+        "A GROUP BY report that returns duplicate rows"
+      ],
+      "tasks": ["Fix all seven bugs in the provided booking API, with a test for each fix."],
+      "acceptance": [
+        "All seven fixed, with a test for each fix.",
+        "No unhandled promise rejections.",
+        "Schema fixes applied as a new migration, not by hand-editing the database.",
+        "Each fix written up as: symptom → cause → fix → how verified."
+      ]
+    },
+    {
+      "day": 7, "weekday": "Sun", "title": "Weekly Project: Booking API v1", "aiMode": "build-day", "isProjectDay": true,
+      "learn": [],
+      "tasks": [
+        "Starts from a client brief: a messy WhatsApp message from a salon owner about double bookings and phone cancellations.",
+        "Write a 1-page scope first: entities, endpoints, business rules, and what is out of scope.",
+        "Endpoints: services CRUD, customers CRUD, create, list (paginated and searchable) and cancel bookings, availability for a date.",
+        "Business rules: no double bookings, no bookings in the past, cancelling sets a status instead of deleting the row.",
+        "CSV import script for the client's customer list: imports the good rows, reports bad rows with line numbers, and a re-run creates no duplicates.",
+        "Migrations + seed, Zod validation, tests, Bruno collection."
+      ],
+      "acceptance": ["See the rubric on the Project tab."]
+    }
+  ],
+  "project": {
+    "name": "Booking API v1",
+    "brief": "A messy WhatsApp message from a salon owner about double bookings and phone cancellations.",
+    "requirements": [
+      "1-page scope first: entities, endpoints, business rules, out of scope",
+      "Services CRUD, customers CRUD, create/list/cancel bookings, availability for a date",
+      "No double bookings, no bookings in the past, cancelling sets a status instead of deleting",
+      "CSV import: good rows imported, bad rows reported with line numbers, re-run creates no duplicates",
+      "Migrations + seed, Zod validation, tests, Bruno collection"
+    ],
+    "stretch": [
+      "Move the overlap rule into the database with an exclusion constraint (needs CREATE EXTENSION btree_gist and a WHERE status <> 'cancelled' clause)",
+      "Rebuild the availability endpoint in Python (FastAPI), Go or Ruby (Rails)"
+    ],
+    "rubric": [
+      { "item": "Scope doc + schema design", "points": 20 },
+      { "item": "API correctness + status codes", "points": 25 },
+      { "item": "Validation + error handling", "points": 20 },
+      { "item": "Tests", "points": 20 },
+      { "item": "README + reproducible setup", "points": 15 }
+    ]
+  }
+}

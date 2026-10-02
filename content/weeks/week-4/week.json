@@ -1,0 +1,81 @@
+{
+  "week": 4,
+  "title": "Ship + Run",
+  "tagline": "Docker, VPS, HTTPS, CI/CD, monitoring",
+  "goal": "Put the booking app live on a real server with a domain, HTTPS, automatic deploys, backups and monitoring.",
+  "outcomes": [
+    "Containerise API, frontend and Postgres with multi-stage Docker builds and Compose",
+    "Provision and harden a VPS (SSH keys, ufw, fail2ban) and compare hosting options with real prices",
+    "Serve the stack over HTTPS with Caddy, DNS, and correct cross-subdomain cookies",
+    "Deploy automatically from GitHub Actions via GHCR, with migrations and rollbacks",
+    "Add logs, error tracking, uptime alerts and tested backups",
+    "Write a runbook another engineer can follow at 2 a.m."
+  ],
+  "projectStage": "Booking App, Live — Docker Compose behind Caddy on a VPS, CI/CD to GHCR, Sentry, uptime alerts, nightly pg_dump to S3-compatible storage.",
+  "days": [
+    {
+      "day": 1, "weekday": "Mon", "title": "Docker", "aiMode": "mixed",
+      "learn": ["Images vs containers, Dockerfile, multi-stage builds, .dockerignore, docker compose, volumes, networks, env files, health checks", "Build-time vs runtime env vars in Next.js (NEXT_PUBLIC_* is baked in at build)", "Internal vs public API URLs (http://api:4000 inside Docker)"],
+      "tasks": ["Write Dockerfiles for the API and the frontend.", "One docker compose file runs API + frontend + Postgres locally.", "Run the Playwright E2E test in CI against the stack started with docker compose."],
+      "acceptance": ["docker compose up starts the whole stack from a clean clone.", "Containers run as a non-root user.", "Database data survives docker compose down and up.", "The Playwright E2E test runs green in CI."]
+    },
+    {
+      "day": 2, "weekday": "Tue", "title": "Linux + VPS", "aiMode": "mixed",
+      "learn": ["SSH keys, Linux basics (users, permissions, systemd, logs), firewall (ufw), fail2ban", "Hosting options: VPS (Hetzner, Contabo, OVH, DigitalOcean), VDS and dedicated servers, PaaS (Vercel, Render, Railway), self-hosted PaaS (Coolify, Dokploy), cloud providers (AWS, Google Cloud, Azure) with EC2, Cloud Run and RDS", "What each one does for you and what it costs"],
+      "tasks": ["Create a VPS and log in with SSH keys only. Disable password and root login.", "Set up a firewall that allows only ports 22, 80 and 443.", "Install Docker on the server.", "Price this app for one month on a VPS, a VDS, a PaaS and AWS, using real prices from Hetzner, Contabo and OVH for the servers. Pick one for a small client and justify it."],
+      "acceptance": ["Password login is disabled.", "Only the required ports are open (verified from outside with nmap).", "Can explain the trade-off between a VPS, a VDS (dedicated CPU), a PaaS and a cloud provider for this app, with numbers."]
+    },
+    {
+      "day": 3, "weekday": "Wed", "title": "Domain, DNS + HTTPS", "aiMode": "mixed",
+      "learn": ["DNS records (A, CNAME, TXT), domains, reverse proxies, Caddy (or Nginx + Certbot), TLS certificates, HTTP → HTTPS redirect", "Cookies across subdomains (Domain, Secure, SameSite), CORS with credentials", "Why Docker-published ports bypass ufw", "Production database options: Postgres on the VPS in Docker or hosted Postgres (Neon, Supabase)"],
+      "tasks": ["Point a domain or subdomain at the VPS.", "Run the stack behind Caddy with automatic HTTPS: app.domain → frontend, api.domain → API.", "Choose the production database and justify it in one line.", "Set production env vars on the server, not in the repo: DATABASE_URL, JWT secret, Google OAuth keys, CORS origin.", "Add the production domain to the Google OAuth redirect URIs.", "Set the auth cookie with Domain=.yourdomain, Secure and SameSite=Lax in production. Domain and Secure come from env vars and stay unset in local dev and CI. Browser fetches use credentials: \"include\", and CORS allows credentials for the exact frontend origin.", "Publish only Caddy's ports 80 and 443. Bind every other container port to 127.0.0.1."],
+      "acceptance": ["Live URL with a valid HTTPS certificate.", "HTTP redirects to HTTPS.", "No secrets in the repo or in Docker images.", "Login works on the live site, including protected pages rendered by Next.js.", "nmap from outside, after deploy, shows only ports 22, 80 and 443."]
+    },
+    {
+      "day": 4, "weekday": "Thu", "title": "CI/CD + Production Database", "aiMode": "mixed",
+      "learn": ["GitHub Actions deploy workflows, building and pushing images to a registry (GHCR)", "Pulling private images on the VPS with a read:packages token, running migrations on deploy, rollbacks", "Self-hosted PaaS (Coolify, Dokploy): what they automate and what you give up", "Convex as a different backend model (for future clients, not this app)"],
+      "tasks": ["Merging to main builds images, pushes them to GHCR and deploys to the VPS.", "Migrations run automatically on deploy. Run a safe seed against production (real services only, no test users).", "Create the first owner with a one-off create-owner script that prompts for the password. It never goes in the seed or the repo.", "Practice a rollback to the previous image and write the steps in a runbook (RUNBOOK.md) in the repo."],
+      "acceptance": ["A merged PR reaches production with no manual steps.", "A failed migration stops the deploy and leaves the old version running.", "A rollback to the previous image follows the runbook and finishes in under 5 minutes.", "Local dev still points at local Postgres."]
+    },
+    {
+      "day": 5, "weekday": "Fri", "title": "Logs, Monitoring + Backups", "aiMode": "mixed",
+      "learn": ["Structured logs, error tracking (Sentry or similar), uptime checks (Uptime Kuma or Better Stack)", "Basic server metrics (CPU, memory, disk)", "Database backups with pg_dump, restore drills"],
+      "tasks": ["Add structured request logs and error tracking to the API.", "Add an uptime check that alerts on Telegram, Slack or email.", "Schedule a nightly database backup to off-server storage (S3-compatible).", "Run the backup job once by hand, then restore that file into a fresh database."],
+      "acceptance": ["An error thrown in production shows up in error tracking with a stack trace.", "Stopping the API triggers an alert within 5 minutes.", "The restore drill works and is added to the runbook."]
+    },
+    {
+      "day": 6, "weekday": "Sat", "title": "Debug Lab (no AI)", "aiMode": "no-ai",
+      "learn": ["docker logs, docker inspect, journalctl, curl -v, dig, reading Caddy logs"],
+      "brokenLab": ["A container stuck in a restart loop (missing env var)", "Database data lost on every restart (no volume)", "HTTPS failing because of a wrong DNS record", "CORS errors in production only (wrong origin in env)", "A full disk from unrotated logs"],
+      "tasks": ["Fix all five issues on a real server."],
+      "acceptance": ["All five fixed on a real server.", "Each fix written up as: symptom → cause → fix → how verified."]
+    },
+    {
+      "day": 7, "weekday": "Sun", "title": "Weekly Project: Booking App, Live", "aiMode": "build-day", "isProjectDay": true,
+      "learn": [],
+      "tasks": ["Client message: \"I want to share the booking link with customers this week. It can't go down on a Saturday.\" Update the scope first.", "Full stack running on a VPS with Docker Compose behind Caddy.", "A second deploy of the same app through Coolify or Dokploy on another VPS (at least 2 vCPU and 2 GB RAM), with a README section on when to pick it over the manual setup for a client, and when not. Include a short comparison with the one you did not use, based on its docs.", "Custom domain or subdomain with HTTPS.", "CI/CD: tests on every PR, auto-deploy on merge, migrations on deploy.", "Error tracking, uptime alerts, nightly backups with a tested restore.", "Runbook: how to deploy, roll back, restore and read logs."],
+      "acceptance": ["See the rubric on the Project tab."]
+    }
+  ],
+  "project": {
+    "name": "Booking App, Live",
+    "brief": "\"I want to share the booking link with customers this week. It can't go down on a Saturday.\"",
+    "requirements": [
+      "Update the scope first",
+      "Full stack on a VPS with Docker Compose behind Caddy",
+      "Second deploy through Coolify or Dokploy on another VPS (>= 2 vCPU, 2 GB RAM) with a README comparison",
+      "Custom domain or subdomain with HTTPS",
+      "CI/CD: tests on every PR, auto-deploy on merge, migrations on deploy",
+      "Error tracking, uptime alerts, nightly backups with a tested restore",
+      "Runbook: deploy, roll back, restore, read logs"
+    ],
+    "stretch": ["A staging environment that deploys every PR to its own URL", "A small Go service that health-checks the API and sends alerts"],
+    "rubric": [
+      { "item": "Live and working over HTTPS", "points": 25 },
+      { "item": "CI/CD + migrations", "points": 20 },
+      { "item": "Server security", "points": 15 },
+      { "item": "Monitoring, alerts + backups", "points": 20 },
+      { "item": "Runbook + README", "points": 20 }
+    ]
+  }
+}

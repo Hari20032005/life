@@ -1,0 +1,146 @@
+{
+  "week": 2,
+  "title": "Auth, Security + Testing",
+  "tagline": "Users, roles, OAuth, hardening, CI",
+  "goal": "Add users, roles and login to the booking API, and make it hard to break.",
+  "outcomes": [
+    "Hash passwords and issue short-lived JWTs in httpOnly cookies",
+    "Enforce authentication vs authorization with role and ownership checks (401 vs 403)",
+    "Implement Google login (OAuth 2.0 / OIDC) safely, with state and verified-email linking",
+    "Harden an API: Helmet, CORS allowlist, rate limits, Origin checks, dependency scanning",
+    "Attack your own API (SQLi, mass assignment, IDOR) and write up the results",
+    "Run integration tests in GitHub Actions with branch protection"
+  ],
+  "projectStage": "Booking API v2 — adds users table, signup/login/logout/me, roles (owner, staff, customer), Google login, security middleware, CI.",
+  "days": [
+    {
+      "day": 1, "weekday": "Mon", "title": "Authentication", "aiMode": "mixed",
+      "learn": ["Password hashing (argon2 or bcrypt), sessions vs JWT, access and refresh tokens, httpOnly cookies, token expiry"],
+      "tasks": [
+        "Add a users table (email with a unique index on lower(email), password_hash, role) as a migration, and link customers.user_id and staff.user_id to it.",
+        "Build POST /signup, POST /login, POST /logout and GET /me.",
+        "Issue short-lived JWTs (1 hour) in httpOnly cookies."
+      ],
+      "acceptance": [
+        "Passwords are never stored or logged in plain text.",
+        "Wrong credentials return 401 with the same message for \"no such user\" and \"wrong password\".",
+        "Tokens expire. Secrets come from .env.",
+        "Emails are unique regardless of case."
+      ]
+    },
+    {
+      "day": 2, "weekday": "Tue", "title": "Authorization + Roles", "aiMode": "mixed",
+      "learn": ["Authentication vs authorization, roles (owner, staff, customer), ownership checks, permission middleware, 401 vs 403"],
+      "tasks": [
+        "Owners manage services and staff. Staff see their own schedule. Customers see and cancel only their own bookings.",
+        "Add a permission middleware and use it on every route."
+      ],
+      "acceptance": [
+        "A customer cannot read or cancel another customer's booking (tested).",
+        "Wrong role returns 403, missing login returns 401.",
+        "Every route has an explicit permission rule."
+      ]
+    },
+    {
+      "day": 3, "weekday": "Wed", "title": "Google Login (OAuth)", "aiMode": "mixed",
+      "learn": [
+        "How OAuth 2.0 and OpenID Connect work (redirect, code, token exchange, state, PKCE)",
+        "Using a maintained library on top of the Day 1 auth (Arctic, or Passport.js with passport-google-oauth20)",
+        "Linking a Google account to an existing email"
+      ],
+      "tasks": [
+        "Add \"Sign in with Google\".",
+        "Link Google login to an existing account with the same verified email. Serve a minimal confirm-password form from the API for now (Week 3 moves it into Next.js)."
+      ],
+      "acceptance": [
+        "Email/password and Google login both work.",
+        "The state parameter is checked (no login CSRF).",
+        "The Google client secret lives in .env only.",
+        "Linking happens only when Google reports email_verified and the user confirms their existing password."
+      ]
+    },
+    {
+      "day": 4, "weekday": "Thu", "title": "Security Hardening", "aiMode": "mixed",
+      "learn": ["OWASP Top 10 basics, Helmet, CORS allowlist, rate limiting, CSRF for cookie auth, input validation, secrets management, dependency scanning (npm audit, Semgrep)"],
+      "tasks": [
+        "Add Helmet, a CORS allowlist, and rate limiting on login and signup.",
+        "Add an Origin check on every state-changing route (CSRF protection for cookie auth).",
+        "Run npm audit and Semgrep. Fix or document every finding.",
+        "Attack your own API: SQL injection, mass assignment (sending role=owner on signup), IDOR (changing booking IDs in the URL)."
+      ],
+      "acceptance": [
+        "CORS allows the frontend origin only.",
+        "Repeated failed logins are rate-limited.",
+        "curl -X POST /bookings with a valid session cookie and an Origin header of https://evil.example returns 403.",
+        "Each attack attempt is written up with its result."
+      ]
+    },
+    {
+      "day": 5, "weekday": "Fri", "title": "Integration Tests + CI", "aiMode": "mixed",
+      "learn": ["Integration tests against a real test database, fixtures, testing auth flows, coverage reports, GitHub Actions"],
+      "tasks": [
+        "Write tests for signup, login, logout, roles and ownership.",
+        "Add a GitHub Actions workflow that runs lint + tests on every PR (with a pgvector/pgvector:pg17 service container, the same image as local).",
+        "Turn on branch protection so PRs cannot merge when CI fails. Use a public repo (private repos need a paid plan) and turn on \"Do not allow bypassing the above settings\".",
+        "Ask the AI agent to refactor all routes to one consistent error format. Review the diff, run the tests and keep only verified changes."
+      ],
+      "acceptance": [
+        "CI is green on main.",
+        "80%+ coverage on auth and booking logic.",
+        "A PR with a failing test is blocked from merging."
+      ]
+    },
+    {
+      "day": 6, "weekday": "Sat", "title": "Debug Lab (no AI)", "aiMode": "no-ai",
+      "learn": ["Testing attacks with curl and Bruno, reading auth logs", "Finding leaked secrets in Git history (git log -p, gitleaks)"],
+      "brokenLab": [
+        "Passwords stored in plain text",
+        "JWTs that never expire",
+        "SQL injection in the login query",
+        "Any logged-in user can cancel anyone's booking",
+        "A secret committed to Git history"
+      ],
+      "tasks": ["Fix all five issues in the provided auth system, with tests for each fix."],
+      "acceptance": [
+        "Login is secure, the SQL injection attempt fails, and expired tokens are rejected.",
+        "Users can only change their own bookings.",
+        "The leaked secret is rotated, and you can explain why deleting the file is not enough.",
+        "Tests written for each fix.",
+        "Each fix written up as: symptom → cause → fix → how verified."
+      ]
+    },
+    {
+      "day": 7, "weekday": "Sun", "title": "Weekly Project: Booking API v2", "aiMode": "build-day", "isProjectDay": true,
+      "learn": [],
+      "tasks": [
+        "Client message: \"Staff keep seeing each other's customers, and someone cancelled a booking that wasn't theirs.\" Update the scope first.",
+        "Email/password + Google login.",
+        "Roles: owner, staff and customer, with ownership checks on every route.",
+        "Helmet, CORS allowlist, rate limiting, Zod validation.",
+        "Integration tests running in GitHub Actions.",
+        "Security notes in the README: what was tested and how."
+      ],
+      "acceptance": ["See the rubric on the Project tab."]
+    }
+  ],
+  "project": {
+    "name": "Booking API v2",
+    "brief": "\"Staff keep seeing each other's customers, and someone cancelled a booking that wasn't theirs.\"",
+    "requirements": [
+      "Update the scope first",
+      "Email/password + Google login",
+      "Roles: owner, staff, customer with ownership checks on every route",
+      "Helmet, CORS allowlist, rate limiting, Zod validation",
+      "Integration tests running in GitHub Actions",
+      "Security notes in the README: what was tested and how"
+    ],
+    "stretch": ["Two-factor login (TOTP) for owner accounts", "Rebuild signup and login in Ruby (Rails)"],
+    "rubric": [
+      { "item": "Auth works securely", "points": 30 },
+      { "item": "Roles + ownership correct", "points": 25 },
+      { "item": "Security hardening", "points": 15 },
+      { "item": "Tests + CI", "points": 20 },
+      { "item": "README + security notes", "points": 10 }
+    ]
+  }
+}
