@@ -1,0 +1,14 @@
+## Week 3 revision notes
+
+<Callout kind="keypoints">
+
+- Server Components by default; `"use client"` for state, effects, events and browser APIs, at the smallest leaf.
+- Never mutate state; keys are stable ids, not indexes.
+- Share one Zod schema between web and API; the server still validates.
+- Server state belongs in TanStack Query; keys carry every input; invalidate after mutations; treat 409 as a normal conflict.
+- Cookies cross-origin need `credentials: "include"` and exact-origin CORS with credentials.
+- UI role checks are UX only; the API enforces security.
+- Format times with an explicit time zone on server and client to avoid hydration mismatches.
+- Test the flow: RTL for components, Playwright for sign up → book → see → cancel.
+
+</Callout>

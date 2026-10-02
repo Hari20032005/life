@@ -1,0 +1,56 @@
+{
+  "title": "Week 2 Assessment: Booking API v2",
+  "durationMinutes": 120,
+  "rules": [
+    "Mentor present. AI use follows the day's rule (Sunday project: afternoon rules; explain-back still applies).",
+    "Tick a task only when you can demonstrate it live and explain the code behind it.",
+    "Every fix or finding is written up as symptom → cause → fix → how verified."
+  ],
+  "parts": [
+    {
+      "title": "Auth works securely",
+      "points": 30,
+      "tasks": [
+        "Passwords hashed (argon2/bcrypt), never logged; emails unique case-insensitively",
+        "Same 401 message for unknown user and wrong password; tokens expire; secrets in .env",
+        "Email/password and Google login both work; state checked; linking requires email_verified + password confirmation"
+      ]
+    },
+    {
+      "title": "Roles + ownership correct",
+      "points": 25,
+      "tasks": [
+        "Owner, staff, customer permissions match the written matrix",
+        "Customer cannot read or cancel another customer's booking (tested)",
+        "Every route has an explicit permission rule: 401 without login, 403 for wrong role"
+      ]
+    },
+    {
+      "title": "Security hardening",
+      "points": 15,
+      "tasks": [
+        "Helmet, CORS allowlist (frontend origin only), rate limit on login/signup",
+        "Origin check: POST with Origin https://evil.example returns 403",
+        "npm audit + Semgrep findings fixed or documented; SQLi, mass assignment and IDOR attacks written up"
+      ]
+    },
+    {
+      "title": "Tests + CI",
+      "points": 20,
+      "tasks": [
+        "Integration tests for signup, login, logout, roles and ownership against a real Postgres",
+        "GitHub Actions runs lint + tests with the pgvector service container; coverage 80%+ on auth and booking logic",
+        "Branch protection blocks a PR with a failing test"
+      ]
+    },
+    {
+      "title": "README + security notes",
+      "points": 10,
+      "tasks": [
+        "Scope updated first from the client message",
+        "Security notes: what was tested, how, and results",
+        "Setup and verification steps reproducible"
+      ]
+    }
+  ]
+}

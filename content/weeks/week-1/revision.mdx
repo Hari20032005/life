@@ -1,0 +1,14 @@
+## Week 1 revision notes
+
+<Callout kind="keypoints">
+
+- Constraints in the database are the last line of defence: UNIQUE, CHECK, FK, partial unique index.
+- Double booking: partial unique index (exact) + transaction with `FOR UPDATE` and an overlap query (partial overlaps) → 409.
+- Money as integer minor units; times as `timestamptz`.
+- Routes validate and delegate; services hold rules; data access holds SQL.
+- Parameterised queries only. Never build SQL from strings.
+- Pagination and search happen in SQL (LIMIT/OFFSET or keyset, ILIKE + pg_trgm GIN).
+- Every fix: symptom → cause → fix → how verified, plus a test.
+- AI: explain-back every changed line; AI-written tests must be reviewed and mutated.
+
+</Callout>

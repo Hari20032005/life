@@ -1,0 +1,56 @@
+{
+  "title": "Week 5 Assessment: AI Receptionist",
+  "durationMinutes": 120,
+  "rules": [
+    "Mentor present. AI use follows the day's rule (Sunday project: afternoon rules; explain-back still applies).",
+    "Tick a task only when you can demonstrate it live and explain the code behind it.",
+    "Every fix or finding is written up as symptom → cause → fix → how verified."
+  ],
+  "parts": [
+    {
+      "title": "RAG answers correct with citations",
+      "points": 25,
+      "tasks": [
+        "Documents loaded into pgvector; retrieval returns the right chunks on the 10-question set",
+        "Answers cite the document they came from",
+        "Bot says I don't know when the answer is not in the documents (no made-up prices); chunk size justified with results"
+      ]
+    },
+    {
+      "title": "Tool calling safe and correct",
+      "points": 25,
+      "tasks": [
+        "check_availability, create_booking, cancel_booking call the existing service layer with the user's identity",
+        "Create/cancel run only via Confirm with the pending action id (tested); model text never triggers them",
+        "Date without UTC offset or in the past is rejected, not booked; every tool call logged"
+      ]
+    },
+    {
+      "title": "Evals + tracing",
+      "points": 20,
+      "tasks": [
+        "30-case eval set run in CI with a reported pass rate (85%+ or failures explained)",
+        "Every conversation traceable end to end",
+        "Eval cases cover injection, unknown answers, tool calls and out-of-scope questions"
+      ]
+    },
+    {
+      "title": "Guardrails + cost control",
+      "points": 15,
+      "tasks": [
+        "Out-of-scope questions politely refused; injection attempts written up with fixes",
+        "Cost per conversation measured and written in the README",
+        "Daily token limit: with the limit low, next request returns 429 with a clear message"
+      ]
+    },
+    {
+      "title": "README + demo video",
+      "points": 15,
+      "tasks": [
+        "Scope updated first from the client message; deployed on the Week 4 VPS",
+        "2-minute demo video linked in the README",
+        "Chat widget on the booking site works end to end"
+      ]
+    }
+  ]
+}

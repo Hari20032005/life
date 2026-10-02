@@ -1,0 +1,41 @@
+## Week 4 cheat sheet
+
+### Docker / Compose
+```bash
+docker compose up -d --build        docker compose ps         docker compose logs -f api
+docker compose exec api sh          docker compose down       # NOT down -v on production
+docker compose run --rm api node dist/migrate.js
+docker system df                    docker image prune
+```
+
+### Server lock-down
+```bash
+sudo adduser deploy && sudo usermod -aG sudo deploy
+# /etc/ssh/sshd_config.d/99-hardening.conf: PasswordAuthentication no / PermitRootLogin no
+sudo ufw default deny incoming && sudo ufw allow 22,80,443/tcp && sudo ufw enable
+nmap -Pn SERVER_IP        # from OUTSIDE: expect 22, 80, 443 only
+```
+
+### DNS and TLS debugging
+```bash
+dig +short app.example.com            dig @1.1.1.1 app.example.com
+curl -vI https://app.example.com      curl -I http://app.example.com      # expect redirect
+```
+
+### Caddyfile
+```text
+app.example.com { reverse_proxy web:3000 }
+api.example.com { reverse_proxy api:4000 }
+```
+
+### Production cookie env
+`COOKIE_SECURE=true  COOKIE_DOMAIN=.example.com  WEB_ORIGIN=https://app.example.com`
+
+### Deploy order and rollback
+Test → build/push SHA image → pull → migrate (abort on failure) → up -d → /health.  Rollback: `TAG=<previous-sha> docker compose up -d`.
+
+### Backup / restore
+```bash
+pg_dump -U postgres -Fc booking > booking.dump
+createdb booking_restore && pg_restore -d booking_restore --no-owner booking.dump
+```

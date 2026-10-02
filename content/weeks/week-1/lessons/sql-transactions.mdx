@@ -62,8 +62,8 @@ sequenceDiagram
     participant A as Request A
     participant DB as Postgres
     participant B as Request B
-    A->>DB: BEGIN; SELECT staff FOR UPDATE (lock)
-    B->>DB: BEGIN; SELECT staff FOR UPDATE (waits…)
+    A->>DB: BEGIN then SELECT staff FOR UPDATE (lock)
+    B->>DB: BEGIN then SELECT staff FOR UPDATE (waits)
     A->>DB: overlap check: none → INSERT → COMMIT (lock released)
     DB-->>B: lock acquired
     B->>DB: overlap check: finds A's booking

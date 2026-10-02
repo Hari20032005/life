@@ -1,0 +1,50 @@
+## Week 1 cheat sheet
+
+### HTTP status codes for the booking API
+| Code | When |
+|------|------|
+| 200 | OK (GET/PUT/PATCH) |
+| 201 | Created (POST) |
+| 204 | Deleted, no body |
+| 400 | Invalid input (Zod field errors) |
+| 404 | Unknown resource or path |
+| 409 | Conflict: overlapping booking, duplicate email |
+| 500 | Unexpected error (no stack trace in body) |
+
+### Express skeleton
+```ts
+app.use(express.json());
+app.use("/services", servicesRouter);
+app.use((req, res) => res.status(404).json({ error: { code: "NOT_FOUND", message: "Route not found" } }));
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError) return res.status(400).json({ error: { code: "BAD_JSON", message: "Invalid JSON" } });
+  if (err instanceof ConflictError) return res.status(409).json({ error: { code: "CONFLICT", message: err.message } });
+  logger.error(err);
+  res.status(500).json({ error: { code: "INTERNAL", message: "Something went wrong" } });
+});
+```
+
+### SQL you must know
+```sql
+SELECT ... FROM a JOIN b ON b.a_id = a.id WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT 20 OFFSET 0;
+INSERT ... ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name RETURNING *;
+CREATE UNIQUE INDEX ON bookings (staff_id, starts_at) WHERE status <> 'cancelled';
+BEGIN; SELECT id FROM staff WHERE id = $1 FOR UPDATE; /* overlap check */ INSERT ...; COMMIT;
+EXPLAIN ANALYZE SELECT ...;
+```
+Overlap test: `existing.starts_at < $new_end AND existing.ends_at > $new_start`.
+
+### Layering
+routes (HTTP + Zod) → services (rules, transactions) → data access (Drizzle/SQL) → Postgres. Routes never contain SQL.
+
+### Zod
+```ts
+const bookingBody = z.object({ serviceId: z.number().int().positive(), startsAt: z.string().datetime({ offset: true }) }).strict();
+```
+
+### Vitest + Supertest
+```ts
+const res = await request(app).post("/bookings").send(bad);
+expect(res.status).toBe(400);
+expect(res.body.error.fields.startsAt).toBeDefined();
+```

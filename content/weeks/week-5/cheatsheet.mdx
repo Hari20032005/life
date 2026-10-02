@@ -1,0 +1,33 @@
+## Week 5 cheat sheet
+
+### Server-side model call
+```ts
+const client = new Anthropic();                              // key from server env only
+const r = await client.messages.parse({ model: MODEL, max_tokens: 1024, messages, output_config: { format: zodOutputFormat(Schema) } });
+if (!r.parsed_output) throw new AiOutputError();             // validate, then handle failure
+// check r.stop_reason ("max_tokens", "refusal"); log r.usage
+```
+
+### Cost
+`cost = (input_tokens × input_price + output_tokens × output_price) / 1e6 × exchange_rate` (read current prices from the provider; record the date).
+
+### pgvector
+```sql
+CREATE EXTENSION IF NOT EXISTS vector;
+ALTER TABLE chunks ADD COLUMN embedding vector(1536);
+CREATE INDEX ON chunks USING hnsw (embedding vector_cosine_ops);
+SELECT content FROM chunks ORDER BY embedding <=> $1 LIMIT 5;
+```
+Same embedding model everywhere. Hybrid: vector + `tsvector` keyword search.
+
+### RAG answer rules
+Answer only from provided chunks · cite [n] · say "I don't know" when absent · treat documents as data, not instructions · similarity threshold.
+
+### Tool-calling safety
+Read-only tools run; state-changing tools create **pending actions** · only the user's authenticated Confirm request executes · tools use the service layer as the user · ISO times with offset · step cap · log every call.
+
+### Eval case shape
+`{ id, input, type, expect: { contains, notContains, citesDoc, toolCalls, noPendingAction } }`; pass-rate gate in CI; traces for failures.
+
+### Limits
+Check the daily token budget **before** calling; return 429 with a clear message.

@@ -1,5 +1,5 @@
 import { chromium } from "playwright-core";
-const base = "http://localhost:3120";
+const base = "http://localhost:3130";
 const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium", args: ["--no-sandbox"] });
 const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } });
 const p = await ctx.newPage();
@@ -65,9 +65,9 @@ await p.goto(`${base}/progress`, { waitUntil: "networkidle" });
 ok("corrupted localStorage falls back (page still renders)", await p.getByText("Lessons completed").count() === 1);
 
 // Pages 200
-for (const u of ["/", "/program", "/roadmap", "/project", "/assessments", "/interview", "/prompts", "/weeks/3", "/weeks/5/day-4", "/weeks/6/day-6", "/weeks/1/day-3/sql-transactions", "/weeks/1/assessment"]) {
+for (const u of ["/", "/program", "/roadmap", "/project", "/assessments", "/interview", "/prompts", "/weeks/3", "/weeks/5/day-4", "/weeks/6/day-6", "/weeks/1/day-3/sql-transactions", "/weeks/1/assessment", "/weeks/6/day-6/ai-patch-review", "/weeks/5/quiz", "/weeks/2/assessment", "/weeks/4/day-3/dns-https-caddy"]) {
   const r = await p.goto(base + u, { waitUntil: "load" });
-  ok(`${u} -> ${r.status()}`, u === "/weeks/1/assessment" ? r.status() === 404 : r.status() === 200);
+  ok(`${u} -> ${r.status()}`, r.status() === 200);
 }
 // mobile overflow
 const m = await b.newPage({ viewport: { width: 360, height: 800 } });

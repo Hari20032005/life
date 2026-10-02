@@ -1,0 +1,12 @@
+## Week 5 revision notes
+
+<Callout kind="keypoints">
+
+- LLM calls are server-side; send only needed fields; validate model output; log tokens and cost.
+- Prompts are versioned code; no prompt makes injection impossible: use least privilege and confirmation.
+- RAG: chunk well, embed with one model, hybrid search, cite, abstain, treat documents as data.
+- Tools: model text never executes actions; pending action + authenticated Confirm; same auth and validation as the API; offsets required.
+- Evals: 30+ cases including attacks and unknowns; exact checks first; CI pass-rate gate; trace everything.
+- Cost: trim history, cap steps and tokens, per-user daily limit (429), measure cost per conversation.
+
+</Callout>

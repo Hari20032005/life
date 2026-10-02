@@ -1,0 +1,14 @@
+## Week 2 revision notes
+
+<Callout kind="keypoints">
+
+- Hash passwords (argon2id/bcrypt); never log them; identical 401 for unknown user and wrong password.
+- Short-lived JWT in an httpOnly, Secure, SameSite cookie; secrets in env.
+- Authorization = role check + ownership check, enforced server-side on every route (default deny).
+- OAuth: state (no login CSRF), PKCE, secret on the server, link accounts only with `email_verified` + password confirmation.
+- CORS controls reads; CSRF defences: SameSite + Origin allowlist.
+- Rate-limit auth routes; behind a proxy set `trust proxy`.
+- Integration tests on real Postgres in CI; branch protection blocks failing PRs.
+- Leaked secrets: rotate; history keeps them.
+
+</Callout>

@@ -1,0 +1,56 @@
+{
+  "title": "Week 6 Assessment: Client Solution v1.0",
+  "durationMinutes": 120,
+  "rules": [
+    "Mentor present. AI use follows the day's rule (Sunday project: afternoon rules; explain-back still applies).",
+    "Tick a task only when you can demonstrate it live and explain the code behind it.",
+    "Every fix or finding is written up as symptom → cause → fix → how verified."
+  ],
+  "parts": [
+    {
+      "title": "Solves the client's actual problem",
+      "points": 30,
+      "tasks": [
+        "Problem statement in the client's words and numbers, signed off",
+        "Measurable success criteria with baselines and results",
+        "Change request answered in writing; merged or explicitly moved to v2"
+      ]
+    },
+    {
+      "title": "Full-stack + AI functionality",
+      "points": 20,
+      "tasks": [
+        "Core flow works end to end on the live site",
+        "AI components (RAG/tools/classification as designed) behave correctly on real examples",
+        "Reuse of Weeks 1-5 building blocks is deliberate and documented"
+      ]
+    },
+    {
+      "title": "Security, tests + evals",
+      "points": 15,
+      "tasks": [
+        "Every PR has tests and a How I verified this section",
+        "Eval results and security checks recorded in the README",
+        "AI patch bug found, explained, fixed by hand; capstone reviewed for the same bug class"
+      ]
+    },
+    {
+      "title": "Deployment + operations",
+      "points": 15,
+      "tasks": [
+        "Live URL with HTTPS, CI/CD, monitoring on",
+        "Backups tested; rollback rehearsed",
+        "Local setup and deployment setup clearly separated"
+      ]
+    },
+    {
+      "title": "Demo, handover docs + AI workflow reflection",
+      "points": 20,
+      "tasks": [
+        "10-minute live demo with results against success criteria; Loom recorded",
+        "Handover pack: README, architecture doc, API reference, runbook, known limits, monthly cost",
+        "README AI section: what AI helped build, how verified, where it was wrong and how AI's fix differed from mine"
+      ]
+    }
+  ]
+}

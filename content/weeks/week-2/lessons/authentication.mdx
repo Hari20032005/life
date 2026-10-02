@@ -76,7 +76,7 @@ sequenceDiagram
     alt wrong email OR wrong password
         A-->>B: 401 "Invalid email or password" (same message)
     else ok
-        A-->>B: 200 + Set-Cookie: session=JWT; HttpOnly; Secure; SameSite=Lax
+        A-->>B: 200 + Set-Cookie session=JWT (HttpOnly, Secure, SameSite=Lax)
     end
     B->>A: GET /me (cookie sent automatically)
     A->>A: verify JWT signature + exp

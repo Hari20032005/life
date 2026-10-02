@@ -1,0 +1,56 @@
+{
+  "title": "Week 4 Assessment: Booking App, Live",
+  "durationMinutes": 120,
+  "rules": [
+    "Mentor present. AI use follows the day's rule (Sunday project: afternoon rules; explain-back still applies).",
+    "Tick a task only when you can demonstrate it live and explain the code behind it.",
+    "Every fix or finding is written up as symptom → cause → fix → how verified."
+  ],
+  "parts": [
+    {
+      "title": "Live and working over HTTPS",
+      "points": 25,
+      "tasks": [
+        "Live URL with a valid certificate; HTTP redirects to HTTPS",
+        "Login works on the live site including protected Next.js pages",
+        "Custom domain/subdomain with correct cookie Domain/Secure/SameSite and exact CORS origin"
+      ]
+    },
+    {
+      "title": "CI/CD + migrations",
+      "points": 20,
+      "tasks": [
+        "Merging to main builds, pushes to GHCR and deploys with no manual steps",
+        "A failed migration stops the deploy and the old version keeps running",
+        "Rollback to the previous image in under 5 minutes following the runbook"
+      ]
+    },
+    {
+      "title": "Server security",
+      "points": 15,
+      "tasks": [
+        "SSH keys only; password and root login disabled",
+        "ufw allows only 22/80/443; nmap from outside confirms",
+        "No secrets in repo or images; non-root containers; non-Caddy ports bound to 127.0.0.1"
+      ]
+    },
+    {
+      "title": "Monitoring, alerts + backups",
+      "points": 20,
+      "tasks": [
+        "Error thrown in production appears in error tracking with stack trace",
+        "Stopping the API triggers an alert within 5 minutes",
+        "Nightly off-server backup with a timed, successful restore drill"
+      ]
+    },
+    {
+      "title": "Runbook + README",
+      "points": 20,
+      "tasks": [
+        "RUNBOOK.md: deploy, roll back, restore, read logs",
+        "Second deploy via Coolify/Dokploy with a when-to-use comparison",
+        "Hosting cost comparison with sources and dates; production DB choice justified"
+      ]
+    }
+  ]
+}

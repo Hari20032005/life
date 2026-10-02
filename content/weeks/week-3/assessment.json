@@ -1,0 +1,56 @@
+{
+  "title": "Week 3 Assessment: Booking Web App v1",
+  "durationMinutes": 120,
+  "rules": [
+    "Mentor present. AI use follows the day's rule (Sunday project: afternoon rules; explain-back still applies).",
+    "Tick a task only when you can demonstrate it live and explain the code behind it.",
+    "Every fix or finding is written up as symptom → cause → fix → how verified."
+  ],
+  "parts": [
+    {
+      "title": "Booking flow works end to end",
+      "points": 30,
+      "tasks": [
+        "Customer: browse services, pick a slot, book, see and cancel own bookings",
+        "Owner: bookings by day, cancel, mark done, manage services",
+        "Two tabs booking the same slot: one succeeds, the other sees a clear 409 message"
+      ]
+    },
+    {
+      "title": "Auth + roles in the UI",
+      "points": 20,
+      "tasks": [
+        "Email/password and Google login; auth persists across refresh",
+        "Logged-out users redirected from protected pages; role-based pages",
+        "Backend still rejects forbidden actions (shown with curl)"
+      ]
+    },
+    {
+      "title": "UX polish + accessibility",
+      "points": 20,
+      "tasks": [
+        "Loading, error and empty states for every fetch",
+        "Works at 360px and 1440px; keyboard navigable; Lighthouse accessibility 90+",
+        "A 10:00 booking shows 10:00 with the laptop in another time zone"
+      ]
+    },
+    {
+      "title": "Tests",
+      "points": 20,
+      "tasks": [
+        "Unit/component tests (login form, bookings list)",
+        "Playwright E2E: sign up, book, see booking, cancel",
+        "Shared Zod schema validates on client and server"
+      ]
+    },
+    {
+      "title": "README + screenshots",
+      "points": 10,
+      "tasks": [
+        "Scope updated first from the client message",
+        "Screenshots at mobile and desktop widths",
+        "Setup, test commands and how I verified this"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "title": "Week 1 Assessment: Booking API v1",
+  "durationMinutes": 120,
+  "rules": [
+    "Mentor present. AI use follows the day's rule (Sunday project: afternoon rules; explain-back still applies).",
+    "Tick a task only when you can demonstrate it live and explain the code behind it.",
+    "Every fix or finding is written up as symptom → cause → fix → how verified."
+  ],
+  "parts": [
+    {
+      "title": "Scope doc + schema design",
+      "points": 20,
+      "tasks": [
+        "1-page scope: entities, endpoints, business rules, out of scope",
+        "Schema with FKs, CHECKs, UNIQUE, timestamptz; ON DELETE choice justified per FK",
+        "Partial unique index blocks double bookings; cancelled slot can be rebooked"
+      ]
+    },
+    {
+      "title": "API correctness + status codes",
+      "points": 25,
+      "tasks": [
+        "Services/customers CRUD, create/list/cancel bookings, availability for a date",
+        "200/201/204/400/404/409 used correctly; JSON body on every non-204",
+        "No double or past bookings; cancel sets status instead of deleting"
+      ]
+    },
+    {
+      "title": "Validation + error handling",
+      "points": 20,
+      "tasks": [
+        "Zod validation on every route with field-level 400 errors",
+        "Invalid JSON returns 400; unknown path returns JSON 404; DB down returns 500 with no stack trace",
+        "CSV import reports bad rows with line numbers; re-run creates no duplicates"
+      ]
+    },
+    {
+      "title": "Tests",
+      "points": 20,
+      "tasks": [
+        "Happy-path and failure test per route; npm test green",
+        "Mentor breaks 3 lines: at least one test goes red for each",
+        "Concurrency test: two overlapping bookings, exactly one succeeds"
+      ]
+    },
+    {
+      "title": "README + reproducible setup",
+      "points": 15,
+      "tasks": [
+        "Clean clone: install, migrate, seed and run with documented commands",
+        "Bruno collection passes with bru run",
+        "README explains scope, design decisions and how I verified this"
+      ]
+    }
+  ]
+}

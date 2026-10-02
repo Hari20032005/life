@@ -1,0 +1,13 @@
+## Week 4 revision notes
+
+<Callout kind="keypoints">
+
+- Multi-stage builds, non-root users, healthchecks, volumes for data.
+- `NEXT_PUBLIC_*` is baked at build time. Browser uses the public API URL; server code in Docker uses `http://api:4000`.
+- SSH keys only, no root login, ufw 22/80/443, fail2ban. Docker-published ports bypass ufw: bind to 127.0.0.1, publish only Caddy.
+- DNS first, then Caddy; cookies `Domain=.domain; Secure; SameSite=Lax` from env; exact CORS origin.
+- CI/CD: SHA-tagged images, migrate before swapping, abort on failure, rehearsed rollback under 5 minutes.
+- Logs rotated; errors in Sentry; external uptime alerts; backups off-server with a timed restore drill.
+- Choose hosting with numbers (VPS vs VDS vs PaaS vs cloud) and write down who operates it.
+
+</Callout>

@@ -33,7 +33,7 @@ sequenceDiagram
     participant S as Server (authorized_keys = your public key)
     L->>S: connect as deploy
     S-->>L: challenge
-    L->>S: signed response (proves private key; key never sent)
+    L->>S: signed response (proves private key, key never sent)
     S-->>L: shell
 ```
 

@@ -1,0 +1,12 @@
+[
+{"id":"w6f1","topic":"Discovery","front":"Problem vs solution?","back":"Problem: what hurts, with numbers. Solution: how you'd fix it. Ask about the problem first."},
+{"id":"w6f2","topic":"Discovery","front":"Good success criterion?","back":"Specific, measurable, has a baseline and a measurement method."},
+{"id":"w6f3","topic":"Architecture","front":"Required architecture doc sections?","back":"Goals, diagram, data model, API, AI components, hosting, cost, risks/SPOFs, out of scope, task plan."},
+{"id":"w6f4","topic":"Architecture","front":"SPOF?","back":"Single point of failure: one component whose failure stops the system. List with mitigations."},
+{"id":"w6f5","topic":"Planning","front":"Task for an AI agent needs?","back":"Objective, files/constraints, and a checkable done condition. One small PR each."},
+{"id":"w6f6","topic":"Delivery","front":"PR must include?","back":"Tests and a 'How I verified this' section; author can explain every line."},
+{"id":"w6f7","topic":"Change","front":"Change-request reply structure?","back":"Restate need → impact (scope/time/cost/risk) → options → recommendation → ask for written decision."},
+{"id":"w6f8","topic":"Launch","front":"Pre-launch checklist areas?","back":"Security, AI safety/evals, quality, performance, deploy, operations, backups, rollback, privacy."},
+{"id":"w6f9","topic":"AI review","front":"AI patch red flags?","back":"Weakened checks, edited tests, swallowed errors, string SQL, widened CORS, new deps, unrelated refactors."},
+{"id":"w6f10","topic":"Handover","front":"Handover pack?","back":"README (local vs deploy), architecture, API, runbook, known limits, cost, AI section."}
+]

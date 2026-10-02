@@ -1,0 +1,30 @@
+## Week 2 cheat sheet
+
+### Auth building blocks
+```ts
+const hash = await argon2.hash(password, { type: argon2.argon2id });
+const ok = await argon2.verify(hash, attempt);
+const token = jwt.sign({ sub: String(user.id), role: user.role }, process.env.JWT_SECRET!, { expiresIn: "1h", algorithm: "HS256" });
+res.cookie("session", token, { httpOnly: true, secure: isProd, sameSite: "lax", maxAge: 3600_000, domain: process.env.COOKIE_DOMAIN || undefined });
+```
+
+### 401 vs 403
+401: not logged in or invalid/expired session. 403: logged in but role not allowed. Ownership failures: 404 (or 403) without leaking existence.
+
+### Security middleware order
+`helmet → cors(allowlist, credentials) → origin-check → json(limit) → rate-limit(auth) → authenticate → permit(...) → handler`
+
+### Attacks to run on yourself
+| Attack | Test | Expected |
+|--------|------|----------|
+| SQL injection | `' OR 1=1 --` in login | 401/400 |
+| Mass assignment | `role: "owner"` in signup | role = customer |
+| IDOR | other user's booking id | 404/403 |
+| CSRF | Origin: https://evil.example | 403 |
+| Brute force | 15 bad logins | 429 |
+
+### OAuth code flow
+redirect (state + PKCE) → consent → callback (code, state) → verify state → exchange code (server secret + verifier) → validate ID token → link/create → own session cookie.
+
+### Leaked secret
+Rotate first. Deleting the file leaves it in history (`git log -p -S`). Add gitleaks to CI.

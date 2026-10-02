@@ -1,0 +1,39 @@
+## Week 3 cheat sheet
+
+### Component and state patterns
+```tsx
+const [items, setItems] = useState<Item[]>([]);
+setItems((prev) => [...prev, item]);                       // add
+setItems((prev) => prev.filter((i) => i.id !== id));       // remove
+setItems((prev) => prev.map((i) => (i.id === id ? { ...i, done: true } : i)));  // update
+{items.map((i) => <Row key={i.id} item={i} />)}            // stable keys
+```
+
+### Next.js App Router
+```tsx
+// page.tsx (Server Component). In this Next.js version params is a Promise.
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const service = await getService(Number(id));
+  if (!service) notFound();
+  return <ServiceDetail service={service} />;
+}
+```
+Add `"use client"` only to interactive leaves. Route protection file: `proxy.ts` (Next.js 16).
+
+### TanStack Query
+```tsx
+const q = useQuery({ queryKey: ["availability", date, serviceId], queryFn: () => api.availability(date, serviceId), enabled: !!date });
+const m = useMutation({ mutationFn: api.createBooking, onSuccess: () => qc.invalidateQueries({ queryKey: ["availability"] }) });
+```
+
+### Cross-origin cookies
+`fetch(url, { credentials: "include" })` + API `cors({ origin: "http://localhost:3000", credentials: true })`.
+
+### Time
+```ts
+new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" }).format(new Date(iso));
+```
+
+### Testing
+RTL: `screen.getByLabelText`, `getByRole`, `findByRole("alert")`. Playwright: `getByRole`, `expect(...).toBeVisible()`, `timezoneId` in context.
