@@ -42,7 +42,7 @@ node scripts/check-diagrams.mjs http://localhost:3131   # every Mermaid diagram 
 | Booking-system evolution W1→W6 (diagrams, folders, schema, API, flows) | Done |
 | Weekly assessments (rubric-mapped), mid-course, final, 4 mock interviews, AI prompts per week | Done |
 | Cheat sheet + revision notes, quiz, flashcards, interview bank, labs for Weeks 0-6 | Done |
-| Lessons: Week 0 (8), Week 1 (7), Week 2 (4), Week 3 (5), Week 4 (5), Week 5 (5), Week 6 (6) | Core topics covered; see gaps |
+| Lessons: Week 0 (8), Week 1 (7), Week 2 (4), Week 3 (5), Week 4 (5), Week 5 (5), Week 6 (5) = 39 | Core topics covered; see gaps |
 
 ### Known gaps (honest list)
 
