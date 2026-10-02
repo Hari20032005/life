@@ -41,9 +41,11 @@ const noExp = signForTest({ sub: 1, iat: 1 });
 const noExpRes = await call("POST", "/bookings", { slot: "x" }, noExp);
 check("2. tokens carry an exp claim and expired/exp-less tokens are rejected", typeof claims.exp === "number" && expiredRes.status === 401 && noExpRes.status === 401, `exp claim: ${claims.exp}, expired: ${expiredRes.status}, exp-less: ${noExpRes.status}`);
 
-// 3. SQL injection in login
-const inj = await call("POST", "/login", { email: "x' OR '1'='1' --", password: "anything" });
-check("3. SQL injection in login does not log in", inj.status !== 200, `status ${inj.status}`);
+// 3. SQL injection in login. Two probes: (a) the classic tautology, (b) a comment injection with a CORRECT password,
+//    which only logs in if the email is spliced into the SQL text (this still catches a query that is concatenated but whose password is checked elsewhere).
+const injA = await call("POST", "/login", { email: "x' OR '1'='1' --", password: "anything" });
+const injB = await call("POST", "/login", { email: "alice@example.com' --", password: "CorrectHorse9!" });
+check("3. SQL injection in login does not log in (tautology and comment-injection probes)", injA.status !== 200 && injB.status !== 200, `tautology: ${injA.status}, comment injection: ${injB.status}`);
 
 // 4. any logged-in user can cancel anyone's booking
 const aBooking = await call("POST", "/bookings", { slot: "2030-01-08T10:00:00+05:30" }, a);

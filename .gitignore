@@ -6,3 +6,4 @@ out
 labs/week-1/node_modules
 labs/week-3/.build-*
 labs/week-3/mut*
+labs/week-*/inj*

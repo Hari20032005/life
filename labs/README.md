@@ -43,3 +43,11 @@ Three folders, same module:
 - `fixed/` — reference solution.
 
 `node labs/week-6/check.mjs <folder>` runs the folder's own tests and a hidden regression suite. For the lab: copy `start/` to your own folder, fix it by hand, then (and only then) ask an AI agent for its own fix and compare. Mentors: delete `ai-patched/tests.mjs` annotations (`// edited by the agent`) and `fixed/` before handing the repo to trainees.
+
+## Are the checkers precise? (maintainers)
+A checker that passes the fixed solution and fails the broken one can still be wrong: it may fail for the wrong reason, or miss a bug that only looks fixed. So each lab was also tested **one bug at a time**:
+- Weeks 0, 1, 2, 5: `python3 labs/tools/inject-single-bugs.py <week>` re-introduces ONE bug into the fixed solution (folders `injN`); `node labs/week-<w>/check.mjs injN` must fail exactly check N.
+- Week 3: `labs/week-3/single-fix-mutants.py` goes the other way (fixes one bug in the broken app); only check N may flip to passing.
+- Week 6 is small enough to review by hand and has no mutant tool.
+
+This found real problems: the Week 1 pool leak masked later checks, the Week 5 injection was initially not retrievable, and the Week 2 SQL-injection check passed a concatenated query whose password was verified separately (it now also sends a comment-injection probe).
