@@ -30,3 +30,4 @@ jobs:
           node -e "$(cat scripts/list-lesson-urls.js)"
           node scripts/check-diagrams.mjs http://localhost:3200
           node scripts/a11y.mjs http://localhost:3200
+          npm run labs:check

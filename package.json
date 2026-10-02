@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "tsc --noEmit",
     "content:check": "tsx scripts/content-check.ts",
-    "check:browser": "node scripts/smoke.mjs && node scripts/list-lesson-urls.js && node scripts/check-diagrams.mjs && node scripts/a11y.mjs"
+    "check:browser": "node scripts/smoke.mjs && node scripts/list-lesson-urls.js && node scripts/check-diagrams.mjs && node scripts/a11y.mjs",
+    "labs:check": "node labs/week-0/check.mjs broken && node labs/week-0/check.mjs fixed"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",

@@ -17,7 +17,10 @@
   "projectStage": "No booking product yet. You are building the muscles: HTML, CSS, JS, fetch, Git. Week 0 has no PRs, so explain-back runs on the day's last commit and 'How I verified this' goes in the README.",
   "days": [
     {
-      "day": 1, "weekday": "Mon", "title": "How the Web Works + Setup", "aiMode": "tutor-only",
+      "day": 1,
+      "weekday": "Mon",
+      "title": "How the Web Works + Setup",
+      "aiMode": "tutor-only",
       "learn": [
         "What happens when a URL is typed (DNS, server, HTTP request, response, render)",
         "Client vs server; what frontend, backend, database and API mean",
@@ -40,7 +43,10 @@
       ]
     },
     {
-      "day": 2, "weekday": "Tue", "title": "HTML + Forms", "aiMode": "tutor-only",
+      "day": 2,
+      "weekday": "Tue",
+      "title": "HTML + Forms",
+      "aiMode": "tutor-only",
       "learn": [
         "Semantic tags (header, nav, main, section, article, footer), headings, lists, links, images, alt text",
         "Forms, labels, input types, textarea, select, buttons, required fields",
@@ -59,7 +65,10 @@
       ]
     },
     {
-      "day": 3, "weekday": "Wed", "title": "CSS + Responsive Layout", "aiMode": "tutor-only",
+      "day": 3,
+      "weekday": "Wed",
+      "title": "CSS + Responsive Layout",
+      "aiMode": "tutor-only",
       "learn": [
         "Selectors, specificity, box model, units (px, rem, %), typography, colors",
         "Flexbox, Grid, media queries, mobile-first, responsive images",
@@ -78,7 +87,10 @@
       ]
     },
     {
-      "day": 4, "weekday": "Thu", "title": "JavaScript + DOM", "aiMode": "tutor-only",
+      "day": 4,
+      "weekday": "Thu",
+      "title": "JavaScript + DOM",
+      "aiMode": "tutor-only",
       "learn": [
         "const/let, types, operators, conditionals, loops, functions, scope, truthy/falsy",
         "Arrays (push, pop, slice, splice, indexOf, includes), objects, nested data",
@@ -100,7 +112,10 @@
       ]
     },
     {
-      "day": 5, "weekday": "Fri", "title": "First API Call", "aiMode": "tutor-only",
+      "day": 5,
+      "weekday": "Fri",
+      "title": "First API Call",
+      "aiMode": "tutor-only",
       "learn": [
         "JSON, fetch, Promises, async/await, HTTP status codes",
         "Loading, error and empty states",
@@ -120,7 +135,10 @@
       ]
     },
     {
-      "day": 6, "weekday": "Sat", "title": "Debug Lab (no AI)", "aiMode": "no-ai",
+      "day": 6,
+      "weekday": "Sat",
+      "title": "Debug Lab (no AI)",
+      "aiMode": "no-ai",
       "learn": [
         "Inspecting and live-editing styles, device toolbar",
         "Reading Console errors, Network tab for 404s",
@@ -135,14 +153,21 @@
         "A fetch call that fails silently",
         "A click handler attached twice, so one click fires two actions and duplicates items"
       ],
-      "tasks": ["Fix all six bugs in the provided broken page, using only DevTools and your own reasoning."],
+      "tasks": [
+        "The runnable broken page is in the repository at labs/week-0/broken (see labs/README.md). Fix it using DevTools only, then check with: node labs/week-0/check.mjs broken",
+        "Fix all six bugs in the provided broken page, using only DevTools and your own reasoning."
+      ],
       "acceptance": [
         "All six fixed, zero console or network errors.",
         "Each fix written up as: symptom → cause → fix → how verified."
       ]
     },
     {
-      "day": 7, "weekday": "Sun", "title": "Weekly Project: Personal Portfolio Site", "aiMode": "build-day", "isProjectDay": true,
+      "day": 7,
+      "weekday": "Sun",
+      "title": "Weekly Project: Personal Portfolio Site",
+      "aiMode": "build-day",
+      "isProjectDay": true,
       "learn": [],
       "tasks": [
         "About section, projects grid (3+ cards), contact form, live API widget.",
@@ -151,7 +176,9 @@
         "Fully responsive from 360px to 1440px.",
         "Pushed to GitHub, deployed on GitHub Pages, README with screenshots."
       ],
-      "acceptance": ["See the rubric on the Project tab."]
+      "acceptance": [
+        "See the rubric on the Project tab."
+      ]
     }
   ],
   "project": {
@@ -163,13 +190,30 @@
       "Fully responsive from 360px to 1440px",
       "Pushed to GitHub, deployed on GitHub Pages, README with screenshots"
     ],
-    "stretch": ["A page that lists your public repos from the GitHub API."],
+    "stretch": [
+      "A page that lists your public repos from the GitHub API."
+    ],
     "rubric": [
-      { "item": "Semantics + accessibility", "points": 20 },
-      { "item": "Responsive layout + CSS states", "points": 20 },
-      { "item": "JavaScript + API widget with loading and error states", "points": 25 },
-      { "item": "Validator + zero console errors", "points": 15 },
-      { "item": "README + GitHub Pages", "points": 20 }
+      {
+        "item": "Semantics + accessibility",
+        "points": 20
+      },
+      {
+        "item": "Responsive layout + CSS states",
+        "points": 20
+      },
+      {
+        "item": "JavaScript + API widget with loading and error states",
+        "points": 25
+      },
+      {
+        "item": "Validator + zero console errors",
+        "points": 15
+      },
+      {
+        "item": "README + GitHub Pages",
+        "points": 20
+      }
     ]
   }
 }
