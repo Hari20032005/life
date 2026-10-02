@@ -7,6 +7,8 @@ Saturday labs are **no-AI**. Each lab is a small broken project plus an automate
 | Week 0 | `labs/week-0/broken` | broken image path · CSS specificity · mobile overflow · unlabeled input · silent fetch failure · click handler attached twice |
 | Week 1 | `labs/week-1/broken` | SQL injection · missing `await` · errors returned with 200 · missing foreign key (orphan bookings) · pool client never released · price stored as text · GROUP BY report with duplicate rows |
 | Week 2 | `labs/week-2/broken` | plain-text passwords · JWTs that never expire · SQL injection in login · anyone can cancel any booking · hard-coded secret |
+| Week 5 | `labs/week-5/broken` | instruction hidden in an uploaded PDF · bad chunking · time without a UTC offset · whole history resent every turn · invented answer when the documents don't contain it |
+| Week 6 | `labs/week-6/` | AI-suggested patch that passes its tests but reopens an authorization hole (see below) |
 
 ## For learners
 1. Copy `labs/week-0/broken` somewhere outside this repo and serve it (Live Server or `npx serve`).
